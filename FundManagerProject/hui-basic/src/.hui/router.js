@@ -41,6 +41,11 @@ export default initRouter(
           component: PageTwo
         },
         {
+          name: 'searchTransaction',
+          path: 'searchTransaction',
+          component: SearchTransaction
+        },
+        {
           name: '__404__',
           path: '*',
           component: __404__
@@ -68,6 +73,11 @@ function PageThree() {
 }
 function PageTwo() {
   return import(/* webpackChunkName: "PageTwo" */ '@/views/PageTwo.vue')
+}
+function SearchTransaction() {
+  return import(
+    /* webpackChunkName: "searchTransaction" */ '@/views/searchTransaction.vue'
+  )
 }
 function __404__() {
   return import(/* webpackChunkName: "__404__" */ '@/views/__404__.vue')

@@ -38,8 +38,8 @@
                 <h-icon name="mail"></h-icon>
                 业务查询
               </template>
-              <h-menu-item name="3-1"><router-link to="/PageTwo">业务列表</router-link></h-menu-item>
-              <h-menu-item name="3-2"><router-link to="/PageTwo">撤销业务</router-link></h-menu-item>
+              <router-link to="/searchTransaction"><h-menu-item name="3-1">业务列表</h-menu-item></router-link>
+              <router-link to="/PageTwo"><h-menu-item name="3-2">撤销业务</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="4">
