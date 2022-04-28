@@ -54,6 +54,11 @@ const TRANSACTION_CONDITION_ORM = {
     off: "已完成"
 };
 
+function handleEdit(index) {
+    console.log('@@@');
+    console.log(index);
+}
+
 const MOCK = false;
 var columns = [
       {
@@ -116,37 +121,16 @@ var columns = [
                   size: "small",
                 },
                 on: {
-                  click: "handleEdit(params.index)",
-                }
+                  click: () => {
+                    handleEdit(params.index)
+                  }
+                },
               },
               "撤销"
             ),
           ]);
         },
       },
-      // {
-      //   title: "操作",
-      //   key: "operation",
-      //   render(h, params) {
-      //     console.log(params);
-      //     return h("div", {}, [
-      //       h(
-      //         "span",
-      //         {
-      //           props: {},
-      //           on: {
-      //             click() {
-      //               router.push({
-      //                 path: "/",
-      //               });
-      //             },
-      //           },
-      //         },
-      //         "编辑"
-      //       ),
-      //     ]);
-      //   },
-      // },
     ];
     var Data = [
       {
@@ -258,6 +242,7 @@ var columns = [
         operation: "NULL",
       },
     ];
+    
 export default {
   data() {
     const router = this.$router;
@@ -317,10 +302,6 @@ export default {
       this.data = Data.slice((i - 1) * 5, i * 5);
       // console.log(i);
     },
-    handleEdit(index) {
-      console.log('@@@');
-      console.log(index);
-    },
     getList() {
       core
         .fetch({
@@ -343,4 +324,6 @@ export default {
     },
   },
 };
+
+
 </script>
