@@ -4,6 +4,14 @@
       <h-button type = "primary" style="margin-top: 10px">新增交易</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
+      <h-poptip
+      confirm
+      title="您确认删除这条内容吗？"
+      @on-ok="ok"
+      @on-cancel="cancel"
+      >
+      <h-button>删除</h-button>
+      </h-poptip>
     </div>
     <div>
       <h-input
@@ -81,27 +89,64 @@ var columns = [
       },
       {
         title: "操作",
-        key: "operation",
-        render(h, params) {
-          console.log(params);
-          return h("div", {}, [
+        key: "action",
+        render: (h, params) => {
+          return h("div", [
             h(
-              "span",
+              "Button",
               {
-                props: {},
+                props: {
+                  type: "text",
+                  size: "small",
+                },
                 on: {
-                  click() {
-                    router.push({
-                      path: "/",
-                    });
+                  click: () => {
+                    //this.show(params.index);
+                    console.log(params.index);
                   },
                 },
               },
-              "编辑"
+              "查看"
+            ),
+            h(
+              "Button",
+              {
+                props: {
+                  type: "text",
+                  size: "small",
+                },
+                on: {
+                  click: "handleEdit(params.index)",
+                }
+              },
+              "撤销"
             ),
           ]);
         },
       },
+      // {
+      //   title: "操作",
+      //   key: "operation",
+      //   render(h, params) {
+      //     console.log(params);
+      //     return h("div", {}, [
+      //       h(
+      //         "span",
+      //         {
+      //           props: {},
+      //           on: {
+      //             click() {
+      //               router.push({
+      //                 path: "/",
+      //               });
+      //             },
+      //           },
+      //         },
+      //         "编辑"
+      //       ),
+      //     ]);
+      //   },
+      // },
     ];
     var Data = [
       {
@@ -254,14 +299,27 @@ export default {
   //   }
   // },
   methods: {
+    ok() {
+      this.$hMessage.info("点击了确定");
+      console.log('delete a info');
+    },
+    cancel() {
+      this.$hMessage.info("点击了取消");
+      console.log('cancel to delete');
+    },
     pageChange(index) {
-      // console.log(index);
+      console.log(index);
     },
     numChange(value) {
       console.log(value);
     },
     dataChange(i) {
       this.data = Data.slice((i - 1) * 5, i * 5);
+      // console.log(i);
+    },
+    handleEdit(index) {
+      console.log('@@@');
+      console.log(index);
     },
     getList() {
       core

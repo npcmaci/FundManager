@@ -8,7 +8,7 @@
     <div>
       <h-input
         v-model="value"
-        placeholder="请输入..."
+        placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
       ></h-input>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">搜索</h-button>
@@ -58,22 +58,39 @@ var columns = [
         key: "productCategory",
       },
       {
-        title: "地址",
-        key: "address",
-        render(h, params) {
-          console.log(params);
-          return h("div", {}, [
+        title: "操作",
+        key: "action",
+        render: (h, params) => {
+          return h("div", [
             h(
-              "span",
+              "Button",
               {
-                props: {},
+                props: {
+                  type: "text",
+                  size: "small",
+                },
                 on: {
-                  click() {
-                    router.push({
-                      path: "/",
-                    });
+                  click: () => {
+                    //this.show(params.index);
+                    console.log(params.index);
                   },
                 },
+              },
+              "查看"
+            ),
+            h(
+              "Button",
+              {
+                props: {
+                  type: "text",
+                  size: "small",
+                },
+                on: {
+                    click: () => {
+                      // this.show(params.index);
+                      console.log(params.index);
+                    },
+                  },
               },
               "编辑"
             ),
@@ -81,7 +98,7 @@ var columns = [
         },
       },
     ];
-    var Data = [
+var Data = [
       {
         id: "C001",
         productName: "AAaaaa",
@@ -171,7 +188,7 @@ export default {
   data() {
     const router = this.$router;
     console.log(this.$route);
-    // console.log('@@@', data)
+    // console.log('@@@', Data);
     return {
       value: "",
       data: Data.slice(0, 5),
