@@ -8,11 +8,11 @@ import lombok.Data;
 @TableName("person_user")//与数据库的表名进行对应
 @Data
 public class User {
-     @TableId(value = "person_id", type =IdType.AUTO)
-     private String ID;
-     private String Type;
-     private String name;
-     private String IDType;
-     private String IDNum;
-     private String risk;
+     @TableId(value = "person_Id", type =IdType.AUTO)
+     private String personId;
+     private String personName;
+     private String phoneNumber;
+     private String personCertificateType;
+     private String personCertificateNumber;
+     private String personRisk;
 }
