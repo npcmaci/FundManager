@@ -16,7 +16,7 @@
     <div>
       <h-input
         v-model="value"
-        placeholder="请输入..."
+        placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
       ></h-input>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">查询</h-button>
@@ -37,18 +37,15 @@
     ></h-page>
   </div>
 </template>
+
 <script>
 import core from "@hsui/core";
-// const PRODUCT_TYPE_ORM = {
-//   special: "专户产品",
-//   normal: "普通",
-// };
+
 const TRANSACTION_TYPE_ORM = {
     buy: "申购",
     sell: "赎回",
     // withdraw: "撤销",
 };
-
 const TRANSACTION_CONDITION_ORM = {
     on: "待清算",
     off: "已完成"
@@ -59,7 +56,6 @@ function handleEdit(index) {
     console.log(index);
 }
 
-const MOCK = false;
 var columns = [
       {
         title: "业务单号",
@@ -101,7 +97,7 @@ var columns = [
               "Button",
               {
                 props: {
-                  type: "text",
+                  type: "info",
                   size: "small",
                 },
                 on: {
@@ -117,8 +113,11 @@ var columns = [
               "Button",
               {
                 props: {
-                  type: "text",
+                  type: "error",
                   size: "small",
+                },
+                style: {
+                  marginLeft: "5px",
                 },
                 on: {
                   click: () => {
@@ -255,34 +254,6 @@ export default {
       totalNum: Data.length,
     };
   },
-  // created() {
-  //   if (MOCK) {
-  //     this.data = [
-  //       {
-  //         name: "王小明",
-  //         age: 18,
-  //         address: "北京市朝阳区芍药居",
-  //       },
-  //       {
-  //         name: "张小刚",
-  //         age: 25,
-  //         address: "北京市海淀区西二旗",
-  //       },
-  //       {
-  //         name: "李小红",
-  //         age: 30,
-  //         address: "上海市浦东新区世纪大道",
-  //       },
-  //       {
-  //         name: "周小伟",
-  //         age: 26,
-  //         address: "深圳市南山区深南大道",
-  //       },
-  //     ];
-  //   } else {
-  //     this.getList();
-  //   }
-  // },
   methods: {
     ok() {
       this.$hMessage.info("点击了确定");

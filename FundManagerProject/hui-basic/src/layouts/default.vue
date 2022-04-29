@@ -28,9 +28,9 @@
                 <h-icon name="mail"></h-icon>
                 用户管理
               </template>
-              <h-menu-item name="2-1"><router-link to="/PageThree">用户列表</router-link></h-menu-item>
-              <h-menu-item name="2-2"><router-link to="/PageThree">开户</router-link></h-menu-item>
-              <h-menu-item name="2-3"><router-link to="/PageThree">编辑信息</router-link></h-menu-item>
+              <router-link to="/userManagement"><h-menu-item name="2-1">用户列表</h-menu-item></router-link>
+              <router-link to="/PageOne"><h-menu-item name="2-2">开户</h-menu-item></router-link>
+              <router-link to="/PageThree"><h-menu-item name="2-3">编辑信息</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="3">

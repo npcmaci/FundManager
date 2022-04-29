@@ -94,6 +94,21 @@ var columns = [
               },
               "编辑"
             ),
+            h(
+              "poptip",
+              {
+                props: {
+                  confirm: true,
+                  title: "您确认删除这条内容吗？",
+                },
+                Event: {
+                  onOk: "ok",
+                  onCancel: "cancel",
+                }
+                [h("Button","删除")],
+              },
+              "",
+            ),
           ]);
         },
       },
@@ -225,6 +240,14 @@ export default {
   //   }
   // },
   methods: {
+    ok() {
+      this.$hMessage.info("点击了确定");
+      console.log('delete a info');
+    },
+    cancel() {
+      this.$hMessage.info("点击了取消");
+      console.log('cancel to delete');
+    },
     pageChange(index) {
       // console.log(index);
     },

@@ -46,6 +46,11 @@ export default initRouter(
           component: SearchTransaction
         },
         {
+          name: 'userManagement',
+          path: 'userManagement',
+          component: UserManagement
+        },
+        {
           name: '__404__',
           path: '*',
           component: __404__
@@ -77,6 +82,11 @@ function PageTwo() {
 function SearchTransaction() {
   return import(
     /* webpackChunkName: "searchTransaction" */ '@/views/searchTransaction.vue'
+  )
+}
+function UserManagement() {
+  return import(
+    /* webpackChunkName: "userManagement" */ '@/views/userManagement.vue'
   )
 }
 function __404__() {
