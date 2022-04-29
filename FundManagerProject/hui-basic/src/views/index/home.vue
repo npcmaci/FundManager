@@ -35,7 +35,16 @@ const PRODUCT_TYPE_ORM = {
   special: "专户产品",
   normal: "普通",
 };
-const MOCK = false;
+
+function ok() {
+  // this.$hMessage.info("点击了确定");
+  console.log('delete a info');
+};
+function cancel() {
+  // this.$hMessage.info("点击了取消");
+  console.log('cancel to delete');
+};
+
 var columns = [
       {
         title: "产品代码",
@@ -94,21 +103,22 @@ var columns = [
               },
               "编辑"
             ),
-            h(
-              "poptip",
-              {
-                props: {
-                  confirm: true,
-                  title: "您确认删除这条内容吗？",
-                },
-                Event: {
-                  onOk: "ok",
-                  onCancel: "cancel",
-                }
-                [h("Button","删除")],
-              },
-              "",
-            ),
+            // h(
+
+            //   "poptip",
+            //   {
+            //     props: {
+            //       confirm: true,
+            //       title: "您确认内容吗？",
+            //     },
+            //     on: {
+            //       click: () => {
+            //         console.log('123')
+            //       },
+            //     }
+            //   },
+            //   "删除",
+            // ),
           ]);
         },
       },
