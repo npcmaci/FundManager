@@ -229,7 +229,8 @@ var columns = [
         riskLevel: "2级",
       },
     ];
-    
+
+import request from "@/utils/request"
 export default {
   data() {
     const router = this.$router;
@@ -242,7 +243,19 @@ export default {
       totalNum: Data.length,
     };
   },
+  created() {
+    this.load()
+  },
   methods: {
+    load() {
+      request.get("http://localhost:9090/user",{
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        search: this.value
+      }).then(res => {
+        console.log(res)
+      })
+    },
     ok() {
       this.$hMessage.info("点击了确定");
       console.log('delete a info');

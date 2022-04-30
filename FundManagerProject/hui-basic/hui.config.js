@@ -14,7 +14,7 @@ module.exports = {
     // 代理
     proxy: {
         "/api": {
-            target: "http://127.0.0.1:2022",
+            target: "http://localhost:9090",
             changeOrigin: true,
         }
     },
