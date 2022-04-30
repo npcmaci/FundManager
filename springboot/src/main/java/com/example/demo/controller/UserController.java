@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")//请求路径
 public class UserController {
     @Resource

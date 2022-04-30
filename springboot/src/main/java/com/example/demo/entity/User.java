@@ -15,4 +15,5 @@ public class User {
      private String personCertificateType;
      private String personCertificateNumber;
      private String personRisk;
+     private String userType;
 }
