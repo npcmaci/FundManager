@@ -10,6 +10,7 @@
         "h_ui": "^1.33.0"
     },
     "devDependencies": {
+        "@babel/preset-react": "file:node_modules/@babel/preset-react",
         "@hsui/plugin-lint": "1.2.0",
         "@hsui/plugin-micro-app": "1.8.0",
         "@hsui/plugin-sass": "^1.5.0"
