@@ -38,9 +38,9 @@ const USER_TYPE_ORM = {
     person: "个人",
 };
 
-function handleEdit(index) {
-    console.log('@@@');
-    console.log(index);
+function handleEdit(params) {
+    console.log(params);
+    console.log('@@@', params.index);
 }
 
 var columns = [
@@ -90,7 +90,7 @@ var columns = [
                 },
                 on: {
                   click: () => {
-                    handleEdit(params.index)
+                    handleEdit(params)
                   }
                 },
               },

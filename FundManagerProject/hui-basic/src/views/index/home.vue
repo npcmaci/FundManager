@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h-button type = "primary" style="margin-top: 10px">新建</h-button>
+      <h-button type = "primary" style="margin-top: 10px" @click = "add">新建</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
@@ -27,6 +27,87 @@
       show-total
       :page-size="5"
     ></h-page>
+    <div>
+    <h-button type="primary" @click="modal1 = true">显示对话框</h-button>
+    <h-msg-box
+      v-model="modal1"
+      :escClose="true"
+      title="普通的MsgBox对话框标题"
+      @on-ok="ok"
+      @on-cancel="cancel"
+      :beforeEscClose="beforetest"
+    >
+    <h-form :model="formItem" :label-width="80">
+      <h-form-item label="输入框">
+        <h-input v-model="formItem.input" placeholder="请输入"></h-input>
+      </h-form-item>
+      <h-form-item label="选择器">
+        <h-select v-model="formItem.select" placeholder="请选择">
+          <h-option value="beijing">北京市</h-option>
+          <h-option value="shanghai">上海市</h-option>
+          <h-option value="shenzhen">深圳市</h-option>
+        </h-select>
+      </h-form-item>
+      <h-form-item label="日期控件">
+        <h-row>
+          <h-col span="11">
+            <h-date-picker
+              type="date"
+              placeholder="选择日期"
+              v-model="formItem.date"
+            ></h-date-picker>
+          </h-col>
+          <h-col span="2" style="text-align: center;">-</h-col>
+          <h-col span="11">
+            <h-time-picker
+              type="time"
+              placeholder="选择时间"
+              v-model="formItem.time"
+            ></h-time-picker>
+          </h-col>
+        </h-row>
+      </h-form-item>
+      <h-form-item label="单选框">
+        <h-radio-group v-model="formItem.radio">
+          <h-radio label="male">男</h-radio>
+          <h-radio label="female">女</h-radio>
+        </h-radio-group>
+      </h-form-item>
+      <h-form-item label="多选框">
+        <h-checkbox-group v-model="formItem.checkbox">
+          <h-checkbox label="吃饭"></h-checkbox>
+          <h-checkbox label="睡觉"></h-checkbox>
+          <h-checkbox label="跑步"></h-checkbox>
+          <h-checkbox label="看电影"></h-checkbox>
+        </h-checkbox-group>
+      </h-form-item>
+      <h-form-item label="开关">
+        <h-switch v-model="formItem.switch" size="large">
+          <span slot="open">开启</span>
+          <span slot="close">关闭</span>
+        </h-switch>
+      </h-form-item>
+      <h-form-item label="滑块">
+        <h-slider v-model="formItem.slider" range></h-slider>
+      </h-form-item>
+      <h-form-item label="文本域">
+        <h-input
+          v-model="formItem.textarea"
+          type="textarea"
+          :autosize="{ minRows: 2, maxRows: 5 }"
+          placeholder="请输入..."
+        ></h-input>
+      </h-form-item>
+      <h-form-item>
+        <h-button type="primary">提交</h-button>
+        <h-button type="ghost" style="margin-left: 8px;">取消</h-button>
+      </h-form-item>
+    </h-form>
+      <p>对话框内容</p>
+      <p>对话框内容</p>
+      <p>对话框内容</p>
+    </h-msg-box>
+  </div>
   </div>
 </template>
 <script>
@@ -36,13 +117,9 @@ const PRODUCT_TYPE_ORM = {
   normal: "普通",
 };
 
-function ok() {
-  // this.$hMessage.info("点击了确定");
-  console.log('delete a info');
-};
-function cancel() {
-  // this.$hMessage.info("点击了取消");
-  console.log('cancel to delete');
+function deleteEntry (index) {
+  console.log('delete an entry');
+  alert("successfully delete!!!");
 };
 
 var columns = [
@@ -65,6 +142,10 @@ var columns = [
       {
         title: "证件大类",
         key: "productCategory",
+      },
+      {
+        title: "地址",
+        key: "address",
       },
       {
         title: "操作",
@@ -103,23 +184,25 @@ var columns = [
               },
               "编辑"
             ),
-            // h(
-
-            //   "poptip",
-            //   {
-            //     props: {
-            //       confirm: true,
-            //       title: "您确认内容吗？",
-            //     },
-            //     on: {
-            //       click: () => {
-            //         console.log('123')
-            //       },
-            //     }
-            //   },
-            //   "删除",
-            // ),
-            
+            h(
+              "Button",
+              {
+                props: {
+                  type: "text",
+                  size: "small",
+                },
+                style: {
+                  color: "red",
+                },
+                on: {
+                    click: () => {
+                      console.log(params);
+                      deleteEntry(params.index);
+                    },
+                  },
+              },
+              "删除"
+            ),
           ]);
         },
       },
@@ -217,6 +300,7 @@ export default {
     // console.log('@@@', Data);
     return {
       value: "",
+      modal1: false,
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
@@ -251,13 +335,17 @@ export default {
   //   }
   // },
   methods: {
+    add () {
+
+    },
+    beforetest() {
+      return true;
+    },
     ok() {
       this.$hMessage.info("点击了确定");
-      console.log('delete a info');
     },
     cancel() {
       this.$hMessage.info("点击了取消");
-      console.log('cancel to delete');
     },
     pageChange(index) {
       // console.log(index);
