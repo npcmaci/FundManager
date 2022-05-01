@@ -16,8 +16,7 @@
                 <h-icon name="mail"></h-icon>
                 产品管理
               </template>
-              <router-link to="/home"><h-menu-item name="1-0">主页</h-menu-item></router-link>
-              <router-link to="/PageOne"><h-menu-item name="1-1">产品列表</h-menu-item></router-link>
+              <router-link to="/home"><h-menu-item name="1-0">产品列表</h-menu-item></router-link>
               <router-link to="/PageTwo"><h-menu-item name="1-2">新建基金</h-menu-item></router-link>
               <router-link to="/PageThree"><h-menu-item name="1-3">编辑产品</h-menu-item></router-link>
               <router-link to="/detail"><h-menu-item name="1-4">详情页</h-menu-item></router-link>
@@ -30,7 +29,6 @@
               </template>
               <router-link to="/userManagement"><h-menu-item name="2-1">用户列表</h-menu-item></router-link>
               <router-link to="/PageOne"><h-menu-item name="2-2">开户</h-menu-item></router-link>
-              <router-link to="/PageThree"><h-menu-item name="2-3">编辑信息</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="3">

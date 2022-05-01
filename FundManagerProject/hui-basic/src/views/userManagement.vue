@@ -39,8 +39,13 @@ const USER_TYPE_ORM = {
 };
 
 function handleEdit(params) {
-    console.log(params);
-    console.log('@@@', params.index);
+  console.log(params);
+  console.log('edit an user:', params.index);
+}
+
+function deleteUser(params) {
+  console.log('delete an user:', params.index);
+  alert("successfully delete!!!");
 }
 
 var columns = [
@@ -108,12 +113,12 @@ var columns = [
                 },
                 on: {
                   click: () => {
-                    //this.show(params.index);
+                    deleteUser(params);
                     console.log(params.index);
                   },
                 },
               },
-              "查看"
+              "删除"
             ),
           ]);
         },
