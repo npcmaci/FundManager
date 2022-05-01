@@ -10,8 +10,9 @@
         v-model="value"
         placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
+        clearable
       ></h-input>
-      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">查询</h-button>
+      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px" @click = "load">查询</h-button>
       <p class="demo-data" v-show="this.value">{{ value }}</p>
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
@@ -51,8 +52,8 @@ function deleteUser(params) {
 var columns = [
       {
         title: "用户编号",
-        key: "userID",
-        render: (h, { row: { userID } }) => h("span", {}, userID.slice(-10)),
+        key: "userId",
+        render: (h, { row: { userId} }) => h("span", {}, userId.slice(-10)),
       },
       {
         title: "用户名称",
@@ -124,7 +125,8 @@ var columns = [
         },
       },
     ];
-    var Data = [
+
+    var Data = [/*
       {
         userID: "000001",
         userName: "张三一",
@@ -232,7 +234,7 @@ var columns = [
         certificateType: "身份证",
         certificateNumber: "1233****61",
         riskLevel: "2级",
-      },
+      },*/
     ];
 
 import request from "@/utils/request"
@@ -254,11 +256,15 @@ export default {
   methods: {
     load() {
       request.get("http://localhost:9090/user",{
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        search: this.value
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          search: this.value
+        }
       }).then(res => {
         console.log(res)
+        this.data = res.data.records
+        this.totalNum = res.data.total
       })
     },
     ok() {
