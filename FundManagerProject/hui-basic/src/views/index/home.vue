@@ -59,7 +59,7 @@ const PRODUCT_TYPE_ORM = {
 };
 
 function deleteEntry (index) {
-  console.log('delete an entry');
+  console.log('delete an entry', index);
   alert("successfully delete!!!");
 };
 
