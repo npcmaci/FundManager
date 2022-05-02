@@ -27,10 +27,32 @@
       show-total
       :page-size="5"
     ></h-page>
+    <h-msg-box
+      v-model="msgBoxVisible"
+      :escClose="true"
+      title="新建产品"
+      @on-ok="ok"
+      @on-cancel="cancel"
+      :beforeEscClose="beforetest"
+    >
+    <h-form :model="formLeft" label-position="left" :label-width="120">
+      <h-form-item label="标题">
+        <h-input v-model="formLeft.input1"></h-input>
+      </h-form-item>
+      <h-form-item label="标题名称">
+        <h-input v-model="formLeft.input2"></h-input>
+      </h-form-item>
+      <h-form-item label="标题名称对齐">
+        <h-input v-model="formLeft.input3"></h-input>
+      </h-form-item>
+    </h-form>
+    </h-msg-box>
   </div>
 </template>
 <script>
 import core from "@hsui/core";
+import request from "@/utils/request.js"
+
 const PRODUCT_TYPE_ORM = {
   special: "专户产品",
   normal: "普通",
@@ -212,6 +234,7 @@ var Data = [
         address: "HZ",
       }
     ];
+
 export default {
   data() {
     const router = this.$router;
@@ -219,6 +242,12 @@ export default {
     // console.log('@@@', Data);
     return {
       value: "",
+      formLeft: {//和数据库一一对应
+        input1: "",
+        input2: "",
+        input3: "",
+      },
+      msgBoxVisible: false,
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
@@ -254,13 +283,18 @@ export default {
   // },
   methods: {
     add () {
-
+      this.msgBoxVisible = true;
+      this.formLeft = {};
     },
     beforetest() {
       return true;
     },
     ok() {
+      request.post("http://localhost:9090/transaction", this.formLeft).then(res => {
+        console.log(res)
+      })
       this.$hMessage.info("点击了确定");
+      console.log('点击了确定~');
     },
     cancel() {
       this.$hMessage.info("点击了取消");
