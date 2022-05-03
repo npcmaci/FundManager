@@ -43,7 +43,10 @@
         >
       </h-form-item>
       <h-form-item>
-        <h-button type="primary" size="large" @click="modal1 = true"
+        <router-link to="/buy"><h-button type="ghost" size = "large"
+          >上一步</h-button
+        ></router-link>
+        <h-button type="primary" size="large" @click="modal1 = true" style="margin-left: 100px"
           >下一步</h-button
         >
         <h-msg-box
@@ -57,9 +60,6 @@
           <br />
           <p style="font-size: 16px">申购基金的风险等级为：积极型</p>
         </h-msg-box>
-        <router-link to="/buy"><h-button type="ghost" size="large" style="margin-left: 350px"
-          >上一步</h-button
-        ></router-link>
       </h-form-item>
     </h-form>
   </div>
@@ -108,7 +108,6 @@ export default {
             });
         }
         this.$router.push('/buy')
-        
       },
   },
 };

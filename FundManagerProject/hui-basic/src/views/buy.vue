@@ -23,7 +23,7 @@
       <h-form-item label="证件号码">
         <h-input
           v-model="formItem.input"
-          placeholder="输入相关证件号按下回车键查询"
+          placeholder="输入证件号"
           @on-enter="onenter"
           style="font size:16px"
         ></h-input>
@@ -35,7 +35,7 @@
           style="font size:16px"
         ></h-input>
       </h-form-item>
-    <router-link to="/decidebuy"><h-button long style="font-size:16px">下一步</h-button></router-link>
+    <router-link to="/decidebuy"><h-button type = "primary" long style="font-size:16px">下一步</h-button></router-link>
     </h-form>
     
   </div>
@@ -62,7 +62,6 @@ export default {
     onenter() {
       this.$hMessage.info("证件号有效");
     },
-    
   },
 };
 </script>

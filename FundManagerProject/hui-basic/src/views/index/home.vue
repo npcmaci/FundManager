@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h-button type = "primary" style="margin-top: 10px" @click = "add">新建</h-button>
+      <h-button type = "primary" style="margin-top: 10px" @click = "jump('/newProduct')">新建</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
@@ -63,6 +63,12 @@ function deleteEntry (index) {
   alert("successfully delete!!!");
 };
 
+function handleEdit(params) {
+  console.log('edit a product:', params.index);
+  console.log(params);
+  this.formLeft = JSON.parse(JSON.stringify(params))
+}
+
 var columns = [
       {
         title: "产品代码",
@@ -119,7 +125,7 @@ var columns = [
                 on: {
                     click: () => {
                       // this.show(params.index);
-                      console.log(params.index);
+                      handleEdit(params);
                     },
                   },
               },
@@ -288,6 +294,9 @@ export default {
     },
     beforetest() {
       return true;
+    },
+    jump(path) {
+      this.$hCore.navigate(path);
     },
     ok() {
       request.post("http://localhost:9090/transaction", this.formLeft).then(res => {

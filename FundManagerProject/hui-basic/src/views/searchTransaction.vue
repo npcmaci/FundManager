@@ -2,7 +2,6 @@
   <div>
     <div>
       <h-button type = "primary" style="margin-top: 10px" @click = "add">新增交易</h-button>
-      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
     <div>
@@ -10,9 +9,10 @@
         v-model="value"
         placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
+        clearable
       ></h-input>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">查询</h-button>
-      <p class="demo-data" v-show="this.value">{{ value }}</p>
+      <!-- <p class="demo-data" v-show="this.value">{{ value }}</p> -->
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
     <h-table stripe
@@ -308,6 +308,19 @@ export default {
     };
   },
   methods: {
+    load() {
+      request.get("http://localhost:9090/transaction",{
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          search: this.value
+        }
+      }).then(res => {
+        console.log(res)
+        this.data = res.data.records
+        this.totalNum = res.data.total
+      })
+    },
     add () {
       this.msgBoxVisible = true;
       this.formLeft = {};

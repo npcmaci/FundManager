@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h-button type = "primary" style="margin-top: 10px" @click = "add">新增用户</h-button>
+      <h-button type = "primary" style="margin-top: 10px" @click = "jump('\Kaihu')">新增用户</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
@@ -13,7 +13,7 @@
         clearable
       ></h-input>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px" @click = "load">查询</h-button>
-      <p class="demo-data" v-show="this.value">{{ value }}</p>
+      <!-- <p class="demo-data" v-show="this.value">{{ value }}</p> -->
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
     <h-table stripe
@@ -146,7 +146,7 @@ var columns = [
       },
     ];
 
-    var Data = [/*
+    var Data = [
       {
         userID: "000001",
         userName: "张三一",
@@ -254,7 +254,7 @@ var columns = [
         certificateType: "身份证",
         certificateNumber: "1233****61",
         riskLevel: "2级",
-      },*/
+      },
     ];
 
 import request from "@/utils/request"
@@ -310,6 +310,9 @@ export default {
     cancel() {
       this.$hMessage.info("点击了取消");
       console.log('cancel to delete');
+    },
+    jump(path) {
+      this.$hCore.navigate(path);
     },
     pageChange(index) {
       console.log(index);

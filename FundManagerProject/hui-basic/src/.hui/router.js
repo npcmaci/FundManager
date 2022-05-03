@@ -36,14 +36,14 @@ export default initRouter(
           component: Detail
         },
         {
+          name: 'editProduct',
+          path: 'editProduct',
+          component: EditProduct
+        },
+        {
           name: 'KaiHu',
           path: 'KaiHu',
           component: KaiHu
-        },
-        {
-          name: 'kaihu1',
-          path: 'kaihu1',
-          component: Kaihu1
         },
         {
           name: 'kaihu2',
@@ -54,6 +54,11 @@ export default initRouter(
           name: 'kaihu3',
           path: 'kaihu3',
           component: Kaihu3
+        },
+        {
+          name: 'newProduct',
+          path: 'newProduct',
+          component: NewProduct
         },
         {
           name: 'searchTransaction',
@@ -96,17 +101,20 @@ function Decidebuy() {
 function Detail() {
   return import(/* webpackChunkName: "detail" */ '@/views/detail.vue')
 }
+function EditProduct() {
+  return import(/* webpackChunkName: "editProduct" */ '@/views/editProduct.vue')
+}
 function KaiHu() {
   return import(/* webpackChunkName: "KaiHu" */ '@/views/KaiHu.vue')
-}
-function Kaihu1() {
-  return import(/* webpackChunkName: "kaihu1" */ '@/views/kaihu1.vue')
 }
 function Kaihu2() {
   return import(/* webpackChunkName: "kaihu2" */ '@/views/kaihu2.vue')
 }
 function Kaihu3() {
   return import(/* webpackChunkName: "kaihu3" */ '@/views/kaihu3.vue')
+}
+function NewProduct() {
+  return import(/* webpackChunkName: "newProduct" */ '@/views/newProduct.vue')
 }
 function SearchTransaction() {
   return import(

@@ -56,12 +56,6 @@
         <h-form-item label="确认密码" prop="passwdCheck" required>
           <h-input type="password" v-model="formValidate.passwdCheck" placeholder="再次输入密码请确认"></h-input>
         </h-form-item>
-        <h-form-item label="邮箱" prop="mail">
-          <h-input
-            v-model="formValidate.mail"
-            placeholder="请输入邮箱"
-          ></h-input>
-        </h-form-item>
         <h-form-item label="出生日期">
           <h-row>
             <h-col span="11">
@@ -75,6 +69,12 @@
             </h-col>
           </h-row>
         </h-form-item>
+        <h-form-item label="邮箱" prop="mail">
+          <h-input
+            v-model="formValidate.mail"
+            placeholder="请输入邮箱"
+          ></h-input>
+        </h-form-item>
         <h-form-item label="职业" prop="job">
           <h-checkbox-group v-model="formValidate.interest">
             <h-checkbox label="学生"></h-checkbox>
@@ -87,27 +87,30 @@
             <h-checkbox label="其它"></h-checkbox>
           </h-checkbox-group>
         </h-form-item>
-        <h-form-item label="介绍" prop="desc">
+        <!-- <h-form-item label="介绍" prop="desc">
           <h-input
             v-model="formValidate.desc"
             type="textarea"
             :autosize="{ minRows: 1, maxRows: 5 }"
             placeholder="请输入..."
           ></h-input>
-        </h-form-item>
-        <h-form-item>
-          <h-button type="primary" @click="handleSubmit('formValidate')"
-            >下一步</h-button
-          >
-          <h-button
-            type="ghost"
-            @click="handleReset('formValidate')"
-            style="margin-left: 188px"
-            >重置</h-button
-          >
-        </h-form-item>
+        </h-form-item> -->
       </h-form>
     </div>
+    <div>
+      <h-row type="flex" justify="space-between" class="demo-row code-row-bg">
+        <h-col span="4"></h-col>
+        <h-col span="4"><h-button
+            type="ghost"
+            @click="handleReset('formValidate')"
+            >重置</h-button
+          ></h-col>
+            <h-col span="4"><h-button type="primary" @click="handleSubmit('formValidate')"
+            >下一步</h-button
+          ></h-col>
+        <h-col span="4"></h-col>
+      </h-row>
+      </div>
   </div>
 </template>
 
@@ -208,6 +211,9 @@ export default {
     },
     handleReset(name) {
       this.$refs[name].resetFields();
+    },
+    onenter() {
+      this.$hMessage.info("证件号有效");
     },
   },
 };

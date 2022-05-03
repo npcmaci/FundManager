@@ -2,15 +2,15 @@
   <div>
     <h-steps
       :current="current"
-      processIcon="t-b-Warning"
+      processIcon="brush"
       waitIcon="more"
-      finishIcon="t-b-correctinformati"
-      style="margin-bottom: 15px"
+      finishIcon="checkmark"
+      style="margin-bottom: 15px; margin-top: 10px"
     >
-      <h-step title="填写个人信息"> </h-step>
-      <h-step title="关联银行卡"></h-step>
-      <h-step title="投资者风险能力评价"></h-step>
-      <h-step title="开户成功"></h-step>
+      <h-step title="填写信息"> </h-step>
+      <h-step title="绑定银行卡"></h-step>
+      <h-step title="填写问卷"></h-step>
+      <h-step title="完成开户"></h-step>
     </h-steps>
     <div style="display: flex; justify-content: center">
       <h-form
@@ -78,30 +78,37 @@
             >
             <h-radio label="c54"
               >D．参与过多年的证券交易，投资知识丰富，具有一定的专业水平
-              12您用于证券投资的资</h-radio
-            >
+            </h-radio>
           </h-radio-group>
         </h-form-item>
-        <h-form-item label="个人投资期望结果介绍" prop="desc">
+        <!-- <h-form-item label="投资期望结果" prop="desc">
           <h-input
             v-model="formValidate.desc"
             type="textarea"
-            :autosize="{ minRows: 2, maxRows: 5 }"
+            :autosize="{ minRows: 1, maxRows: 5 }"
             placeholder="请输入..."
           ></h-input>
-        </h-form-item>
-        <h-form-item>
-          <h-button type="primary" @click="instance('success')"
-            >下一步</h-button
-          >
-          <h-button
-            type="ghost"
-            style="margin-left: 188px"
-            @click="handleReset('formValidate')"
-            >上一步</h-button
-          >
-        </h-form-item>
+        </h-form-item> -->
       </h-form>
+    </div>
+    <div>
+      <h-row type="flex" justify="space-between" class="demo-row code-row-bg">
+        <h-col span="4"></h-col>
+        <h-col span="4"
+          ><h-button type="ghost" @click="handleReset('formValidate')"
+            >上一步</h-button
+          ></h-col
+        >
+        <h-col span="4"
+          ><h-button
+            type="primary"
+            @click="instance('success')"
+            style="margin-bottom: 30px"
+            >下一步</h-button
+          ></h-col
+        >
+        <h-col span="4"></h-col>
+      </h-row>
     </div>
   </div>
 </template>
@@ -149,7 +156,7 @@ export default {
             content: content,
           });
       }
-      this.$router.push("/kaihu1");
+      this.$router.push("/Kaihu");
     },
   },
 };

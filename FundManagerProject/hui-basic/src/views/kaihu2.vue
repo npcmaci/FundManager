@@ -2,24 +2,24 @@
   <div>
     <h-steps
       :current="current"
-      processIcon="t-b-Warning"
+      processIcon="brush"
       waitIcon="more"
-      finishIcon="t-b-correctinformati"
-      style="margin-bottom: 85px"
+      finishIcon="checkmark"
+      style="margin-top: 10px; margin-bottom: 50px"
     >
-      <h-step title="填写个人信息"> </h-step>
-      <h-step title="关联银行卡"></h-step>
-      <h-step title="投资者风险能力评价"></h-step>
-      <h-step title="开户成功"></h-step>
+      <h-step title="填写信息"> </h-step>
+      <h-step title="绑定银行卡"></h-step>
+      <h-step title="填写问卷"></h-step>
+      <h-step title="完成开户"></h-step>
     </h-steps>
-    <div style="display: flex;justify-content: center;">
+    <div style="display: flex; justify-content: center">
       <h-form
         ref="formValidate"
         :model="formValidate"
         :rules="ruleValidate"
         :label-width="80"
         label-position="left"
-         style="max-width: 1300px; padding-top: 30px; margin: 10px；"
+        style="max-width: 1300px; padding-top: 30px; margin: 10px"
       >
         <h-form-item label="发卡银行" required>
           <h-select v-model="formValidate.name" placeholder="请选择">
@@ -53,24 +53,29 @@
           ></h-typefield>
         </h-form-item>
         <h-form-item label="验证码" required>
-            <h-input
-          v-model="formValidate.name"
-          placeholder="请输入收到的验证码"
-          type="text"
-        ></h-input>
-
-        </h-form-item>
-        <h-form-item>
-          <h-button type="primary" @click="handleSubmit('formValidate')"
-            >下一步</h-button
-          >
-          <h-button
-            type="ghost"
-            style="margin-left: 188px"
-            ><router-link to="/kaihu1">上一步</router-link></h-button
-          >
+          <h-input
+            v-model="formValidate.name"
+            placeholder="请输入收到的验证码"
+            type="text"
+          ></h-input>
         </h-form-item>
       </h-form>
+    </div>
+    <div>
+      <h-row type="flex" justify="space-between" class="demo-row code-row-bg">
+        <h-col span="4"></h-col>
+        <h-col span="4"
+          ><h-button type="ghost"
+            ><router-link to="/Kaihu">上一步</router-link></h-button
+          ></h-col
+        >
+        <h-col span="4"
+          ><h-button type="primary" @click="handleSubmit('formValidate')"
+            >下一步</h-button
+          ></h-col
+        >
+        <h-col span="4"></h-col>
+      </h-row>
     </div>
   </div>
 </template>
