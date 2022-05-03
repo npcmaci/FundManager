@@ -21,12 +21,17 @@ public class UserController {
         userMapper.insert(user);
         return Result.success();
     }
+    @DeleteMapping("/{id}")
+    public Result<?> update(@PathVariable String id) {
+        userMapper.deleteById(id);
+        return Result.success();
+    }
 
     @GetMapping
     public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               @RequestParam(defaultValue = "") String search) { //RequestBody注解将json数据转化成java对象
-        Page<User> userPage = userMapper.selectPage(new Page<>(pageNum, pageSize), Wrappers.<User>lambdaQuery().eq(User::getUserId, search).or().like(User::getUserName, search));//可以使用or和and方法连接多个wapper
+        Page<User> userPage = userMapper.selectPage(new Page<>(pageNum, pageSize), Wrappers.<User>lambdaQuery().eq(User::getUserId, search).or().like(User::getUserName, search).or().eq(User::getPhoneNumber, search));//可以使用or和and方法连接多个wapper
 
         return Result.success(userPage);
     }

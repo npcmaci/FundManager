@@ -23,10 +23,11 @@
     ></h-table>
     <h-page
       :total="totalNum"
-      @on-change="dataChange"
+      @on-change="load"
       show-elevator
       show-total
       :page-size="5"
+      :current.sync="currentPage"
     ></h-page>
     <h-msg-box
       v-model="msgBoxVisible"
@@ -66,9 +67,10 @@ function handleEdit(params) {
 
 function deleteUser(params) {
   console.log('delete an user:', params.index);
+  request.delete("http://localhost:9090/user/" + params.row.userId);
   alert("successfully delete!!!");
+  window.load();
 }
-
 var columns = [
       {
         title: "用户编号",
@@ -135,7 +137,7 @@ var columns = [
                 on: {
                   click: () => {
                     deleteUser(params);
-                    console.log(params.index);
+                    console.log(params);
                   },
                 },
               },
@@ -274,21 +276,25 @@ export default {
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
+      currentPage: 1,
     };
   },
   created() {
     this.load()
+  },
+  mounted() {
+    //将Vue方法传到全局对象window中
+    window.load = this.load;
   },
   methods: {
     load() {
       request.get("http://localhost:9090/user",{
         params: {
           pageNum: this.currentPage,
-          pageSize: this.pageSize,
+          pageSize: 5,
           search: this.value
         }
       }).then(res => {
-        console.log(res)
         this.data = res.data.records
         this.totalNum = res.data.total
       })

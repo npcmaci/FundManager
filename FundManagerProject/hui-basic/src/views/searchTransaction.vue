@@ -11,7 +11,7 @@
         placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
       ></h-input>
-      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">查询</h-button>
+      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px" @click = "load">查询</h-button>
       <p class="demo-data" v-show="this.value">{{ value }}</p>
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
@@ -22,10 +22,11 @@
     ></h-table>
     <h-page
       :total="totalNum"
-      @on-change="dataChange"
+      @on-change="load"
       show-elevator
       show-total
       :page-size="5"
+      :current.sync="currentPage"
     ></h-page>
     <h-msg-box
       v-model="msgBoxVisible"
@@ -72,13 +73,14 @@ function handleEdit(index) {
 var columns = [
       {
         title: "业务单号",
-        key: "transactionID",
-        render: (h, { row: { transactionID } }) => h("span", {}, transactionID.slice(-10)),
+        key: "transactionId",
+        render: (h, { row: { transactionId } }) => h("span", {}, transactionId),
       },
       {
         title: "发起时间",
         key: "transactionTime",
         sortable: true,
+        render: (h, { row: {transactionTime } }) => h("span", {}, new Date(transactionTime).toLocaleString()),
       },
       {
         title: "发起用户",
@@ -288,7 +290,6 @@ var Data = [
         operation: "NULL",
       },
   ];
-    
 export default {
   data() {
     const router = this.$router;
@@ -305,9 +306,26 @@ export default {
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
+      currentPage: 1,
     };
   },
+  created() {
+    this.load()
+  },
   methods: {
+    load() {
+      request.get("http://localhost:9090/Transaction",{
+        params: {
+          pageNum: this.currentPage,
+          pageSize: 5,
+          search: this.value
+        }
+      }).then(res => {
+        console.log(res.data)
+        this.data = res.data.records
+        this.totalNum = res.data.total
+      })
+    },
     add () {
       this.msgBoxVisible = true;
       this.formLeft = {};
