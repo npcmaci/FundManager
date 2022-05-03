@@ -28,7 +28,7 @@
                 用户管理
               </template>
               <router-link to="/userManagement"><h-menu-item name="2-1">用户列表</h-menu-item></router-link>
-              <router-link to="/PageOne"><h-menu-item name="2-2">开户</h-menu-item></router-link>
+              <router-link to="/KaiHu"><h-menu-item name="2-2">开户</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="3">
@@ -45,8 +45,8 @@
                 <h-icon name="mail"></h-icon>
                 交易管理
               </template>
-              <h-menu-item name="4-1">申购</h-menu-item>
-              <h-menu-item name="4-2">赎回</h-menu-item>
+              <router-link to="/buy"><h-menu-item name="4-1">申购</h-menu-item></router-link>
+              <router-link to="/PageThree"><h-menu-item name="4-2">赎回</h-menu-item></router-link>
               <h-menu-item name="4-3">个人账户</h-menu-item>
             </h-submenu>
 
