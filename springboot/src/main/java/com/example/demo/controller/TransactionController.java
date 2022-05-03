@@ -21,6 +21,11 @@ public class TransactionController {
         transactionMapper.insert(transaction);
         return Result.success();
     }
+    @DeleteMapping("/{id}")
+    public Result<?> update(@PathVariable String id) {
+        transactionMapper.deleteById(id);
+        return Result.success();
+    }
     @GetMapping
     public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,

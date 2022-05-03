@@ -312,6 +312,10 @@ export default {
   created() {
     this.load()
   },
+  mounted() {
+    //将Vue方法传到全局对象window中
+    window.load = this.load;
+  },
   methods: {
     load() {
       request.get("http://localhost:9090/Transaction",{
