@@ -22,7 +22,7 @@
         style="max-width: 1300px; padding-top: 30px; margin: 10px"
       >
         <h-form-item label="发卡银行" required>
-          <h-select v-model="formValidate.name" placeholder="请选择">
+          <h-select v-model="formValidate.bank" placeholder="请选择">
             <h-option value="中国工商银行">中国工商银行</h-option>
             <h-option value="中国农业银行">中国农业银行</h-option>
             <h-option value="中国银行">中国银行</h-option>
@@ -34,7 +34,7 @@
         <h-form-item label="银行卡号" required>
           <h-typefield
             type="cardNo"
-            v-model="formValidate.name"
+            v-model="formValidate.bankcard"
             placeholder="请输入卡号"
             bigTips
           ></h-typefield>
@@ -48,13 +48,14 @@
         <h-form-item label="手机号" required>
           <h-typefield
             type="text"
+            v-model="formValidate.phone"
             placeholder="请输入银行预留手机号"
             bigTips
           ></h-typefield>
         </h-form-item>
         <h-form-item label="验证码" required>
           <h-input
-            v-model="formValidate.name"
+            v-model="formValidate.captcha"
             placeholder="请输入收到的验证码"
             type="text"
           ></h-input>
@@ -80,73 +81,48 @@
   </div>
 </template>
 <script>
+import request from '@/utils/request.js'
 export default {
   data() {
     return {
       current: 1,
       formValidate: {
+        bank: "",
+        bankcard: "",
         name: "",
-        mail: "",
-        city: "",
-        gender: "",
-        interest: [],
-        desc: "",
+        phone: "",
+        captcha: "",
+        ...this.$route.params.olddata,
+        //下面是上一个页面传过来的数据
+        // passwd: "",
+        // passwdCheck: "",
+        // type: "",
+        // mail: "",
+        // gender: "",
+        // job: [],
+        // date: "",
+        // card: "",
+        // cardnumber: "",
       },
       ruleValidate: {
-        name: [{ required: true, message: "姓名不能为空", trigger: "blur" }],
-        mail: [
-          { required: true, message: "邮箱不能为空", trigger: "blur" },
-          { type: "email", message: "邮箱格式不正确", trigger: "blur" },
-        ],
+        bank: [{ required: true, message: "银行不能为空", trigger: "blur" }],
+        name: [{ required: true, message: "名字不能为空", trigger: "blur" }],
         city: [{ required: true, message: "请选择城市", trigger: "change" }],
-        gender: [{ required: true, message: "请选择性别", trigger: "change" }],
-        interest: [
-          {
-            required: true,
-            type: "array",
-            min: 1,
-            message: "至少选择一个爱好",
-            trigger: "change",
-          },
-          {
-            type: "array",
-            max: 2,
-            message: "最多选择两个爱好",
-            trigger: "change",
-          },
-        ],
-        date: [
-          {
-            required: true,
-            type: "date",
-            message: "请选择日期",
-            trigger: "change",
-          },
-        ],
-        time: [
-          {
-            required: true,
-            type: "string",
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
-        desc: [
-          { required: true, message: "请输入个人介绍", trigger: "blur" },
-          {
-            type: "string",
-            min: 20,
-            message: "介绍不能少于20字",
-            trigger: "blur",
-          },
-        ],
       },
     };
   },
   methods: {
     handleSubmit(name) {
+      request.post(
+        '/rssd',
+        {
+          card:this.formValidate.card
+        }
+      ).then((res)=>{
+        console.log(res.data);
+      })
       this.$hMessage.success("提交成功!");
-      this.$router.push("/kaihu3");
+      this.$router.push('/kaihu3');
       // this.$refs[name].validate((valid) => {
       //   if (valid) {
 
@@ -159,6 +135,7 @@ export default {
       this.$refs[name].resetFields();
     },
   },
+
 };
 </script>
 <style scoped>

@@ -22,7 +22,7 @@
       >
         <h-form-item prop="gender">
           <div class="ques">1 请问您的年龄处于：</div>
-          <h-radio-group v-model="formValidate.gender">
+          <h-radio-group v-model="formValidate.q1">
             <h-radio label="c11">A．30岁以下；</h-radio>
             <h-radio label="c12">B．31-40岁；</h-radio>
             <h-radio label="c13">C．41-50岁；</h-radio>
@@ -36,7 +36,7 @@
             您家庭预计进行证券投资的资金占家庭现有总资产(不含自住、自用房产及汽车等固定资
             产)的比例是：
           </div>
-          <h-radio-group v-model="formValidate.gender">
+          <h-radio-group v-model="formValidate.q2">
             <h-radio label="c21">A．70%以上；</h-radio>
             <h-radio label="c22">B．50%-70% ；</h-radio>
             <h-radio label="c23">C．30%－50%；</h-radio>
@@ -46,7 +46,7 @@
         </h-form-item>
         <h-form-item prop="gender">
           <div class="ques">3 进行一项重大投资后，您通常会觉得：</div>
-          <h-radio-group v-model="formValidate.gender">
+          <h-radio-group v-model="formValidate.q3">
             <h-radio label="c31">A．很高兴，对自己的决定很有信心</h-radio>
             <h-radio label="c32">B．轻松，基本持乐观态度；</h-radio>
             <h-radio label="c33">C．基本没什么影响；</h-radio>
@@ -58,7 +58,7 @@
           <div class="ques">
             4 如果您需要把大量现金整天携带在身的话，您是否会感到：
           </div>
-          <h-radio-group v-model="formValidate.gender">
+          <h-radio-group v-model="formValidate.q4">
             <h-radio label="c41">A．非常焦虑；</h-radio>
             <h-radio label="c42">B．有点焦虑； </h-radio>
             <h-radio label="c43">C．完全不会焦虑</h-radio>
@@ -66,7 +66,7 @@
         </h-form-item>
         <h-form-item prop="gender">
           <div class="ques">5 您是否了解证券市场的相关知识：</div>
-          <h-radio-group v-model="formValidate.gender">
+          <h-radio-group v-model="formValidate.q5">
             <h-radio label="c51"
               >A．从来没有参与过证券交易，对投资知识完全不了解；</h-radio
             >
@@ -119,6 +119,11 @@ export default {
       current: 2,
       formValidate: {
         gender: "",
+        q1: "",
+        q2: "",
+        q3: "",
+        q4: "",
+        q5: "",
         desc: "",
       },
       ruleValidate: {
