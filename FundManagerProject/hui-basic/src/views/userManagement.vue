@@ -59,7 +59,9 @@ const USER_TYPE_ORM = {
     company: "企业",
     person: "个人",
 };
-
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 function handleEdit(params) {
   console.log(params);
   console.log('edit an user:', params.index);
@@ -68,8 +70,11 @@ function handleEdit(params) {
 function deleteUser(params) {
   console.log('delete an user:', params.index);
   request.delete("http://localhost:9090/user/" + params.row.userId);
-  alert("successfully delete!!!");
   window.load();
+  window.load();
+  window.load();
+  window.load();
+  alert("successfully delete!!!");
 }
 var columns = [
       {
