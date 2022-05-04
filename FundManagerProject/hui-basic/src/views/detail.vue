@@ -1,88 +1,464 @@
 <template>
   <div class="product-detail">
     <h2>详情页</h2>
-    <div id="productLineEchart" class="line-echart"></div>
+    <input type="button" value="显示近30天数据" @click="changeIsShow30">
+    <input type="button" value="显示近90天数据" @click="changeIsShow90">
+    <input type="button" value="显示近180天数据" @click="changeIsShow180">
+    <input type="button" value="显示近1年数据" @click="changeIsShow365">
+    <input type="button" value="显示成立以来数据" @click="changeIsShow0">
+    <div id="productLineEchart0" v-show="show0" class="line-echart"></div>
+    <div id="productLineEchart30" v-show="show30" class="line-echart"></div>
+    <div id="productLineEchart90" v-show="show90" class="line-echart"></div>
+    <div id="productLineEchart180" v-show="show180" class="line-echart"></div>
+    <div id="productLineEchart365" v-show="show365" class="line-echart"></div>
+    <h-table stripe
+      :data="data2"
+      :columns="columns2"
+      style="margin-bottom: 8px;"
+      ></h-table>
   </div>
 </template>
 
 <script>
+
+var columns = [
+      {
+        title: "价格",
+        key: "unitNetWorth",
+      },
+      {
+        title: "基金代码",
+        key: "fundCode",
+      },
+      {
+        title: "日期",
+        key: "date",
+      },
+      {
+        title: "ID",
+        key: "ID",
+      },
+    ];
+var columns2 = [
+      {
+        title: "基金代码",
+        key: "fundCode",
+      },
+      {
+        title: "基金名称",
+        key: "fundName",
+      },
+      {
+        title: "基金价格",
+        key: "price",
+      },
+      {
+        title: "涨跌幅",
+        key: "z0",
+      },
+      {
+        title: "近1月涨跌幅",
+        key: "z1",
+      },
+      {
+        title: "近3月涨跌幅",
+        key: "z2",
+      },
+      {
+        title: "近1年涨跌幅",
+        key: "z3",
+      },
+      {
+        title: "申购状态",
+        key: "subscriptionStatus",
+      },
+      {
+        title: "赎回状态",
+        key: "redemptionStatus",
+      },
+    {
+        title: "手续费",
+        key: "handlingFee",
+    },
+    {
+        title: "基金类型",
+        key: "fundType",
+    },
+    {
+        title: "基金风险等级",
+        key: "fundRiskLevel",
+    },
+    {
+        title: "基金规模",
+        key: "fundSize",
+    },
+    {
+        title: "成立时间",
+        key: "established",
+    },
+    {
+        title: "基金评级",
+        key: "fundRating",
+    },
+    ];
+var Data = [
+    {
+        unitNetWorth:1,
+        date:"2",
+    },
+    {
+        unitNetWorth:2,
+        date:"3",
+    },
+];
+var Data2 = [
+    {
+        fundCode:1,
+        fundName:"基金1号",
+        subscriptionStatus:"开放",
+        redemptionStatus:"开放",
+        handlingFee:0.5,
+        fundType:"股票型",
+        fundRiskLevel:"高风险",
+        fundSize:10.22,
+        established:"2022-1-1",
+        fundRating:5,
+        z0:3.0398,
+        z1:-4.9936,
+        z2:-14.1876,
+        z3:38.6321,
+        price:29.49,
+    },
+];
+
+
+import request from "@/utils/request"
 export default {
-  mounted() {
-    this.drawLineEchart();
+  async mounted() {
+    await this.drawLineEchart();
+  },
+  data(){
+    const router = this.$router;
+    console.log(this.$route);
+    // console.log('@@@', data)
+    return {
+      show0:true,
+      show30:false,
+      show90:false,
+      show180:false,
+      show365:false,
+      value: "",
+      data: Data.slice(0, 5),
+      columns: columns,
+      totalNum: Data.length,
+      data2: Data2.slice(0, 5),
+      columns2: columns2,
+    };
+  },
+  created() {
+    this.load1();
+    this.load2();
   },
   methods: {
+    load1() {
+    request.get("http://localhost:9090/Pp",{
+      params: {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
+        search: this.value
+      }
+    }).then(res => {
+      console.log(res)
+      this.data = res.data
+      this.totalNum = res.data.total
+      this.Data = res.data
+      if (this.unitarr === undefined){
+        this.unitarr = []
+      }
+      this.Data.forEach(e => {
+            this.unitarr.push(e.unitNetWorth)
+        })
+      console.log(this.Data[0].unitNetWorth)
+      console.log(this.unitarr)
+      if (this.datearr === undefined){
+          this.datearr = []
+        }
+        this.Data.forEach(e => {
+              this.datearr.push(e.date.substring(0,10))//截取前10位
+          })
+        console.log(this.datearr)
+    })
+    },
+    load2() {
+        request.get("http://localhost:9090/Product_i",{
+          params: {
+            fondId: 1,
+          }
+        }).then(res => {
+          console.log(res)
+          this.data2 = res.data
+          this.data2[0].established=this.data2[0].established.substring(0,10)})
+    },
     drawLineEchart() {
-      // 基于准备好的dom，初始化echarts实例
-      const echart = this.$echarts.init(
-        document.getElementById("productLineEchart")
-      );
-
-      // 指定图表的配置项和数据
-      const option = {
-        tooltip: {
-          trigger: "axis",
+        request.get("http://localhost:9090/Pp",{
+              params: {
+                pageNum: this.currentPage,
+                pageSize: this.pageSize,
+                search: this.value
+              }
+            }).then(res => {
+            this.Data = res.data
+            const datearr = []
+            const unitarr = []
+            this.Data.forEach(e => {
+                unitarr.push(e.unitNetWorth)
+            })
+            this.Data.forEach(e => {
+                datearr.push(e.date.substring(0,10))//截取前10位
+            })
+            const unitarr30 = this.unitarr.slice(-30,-1)
+            const datearr30 = this.datearr.slice(-30,-1)
+            const unitarr90 = this.unitarr.slice(-90,-1)
+            const datearr90 = this.datearr.slice(-90,-1)
+            const unitarr180 = this.unitarr.slice(-180,-1)
+            const datearr180 = this.datearr.slice(-180,-1)
+            const unitarr365 = this.unitarr.slice(-365,-1)
+            const datearr365 = this.datearr.slice(-365,-1)
+            const echart = this.$echarts.init(
+                document.getElementById("productLineEchart0")
+            );
+            const echart2 = this.$echarts.init(
+                document.getElementById("productLineEchart30")
+            );
+            const echart3 = this.$echarts.init(
+                document.getElementById("productLineEchart90")
+            );
+            const echart4 = this.$echarts.init(
+                document.getElementById("productLineEchart180")
+            );
+            const echart5 = this.$echarts.init(
+                document.getElementById("productLineEchart365")
+            );
+            const option = {
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["基金"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: datearr,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "基金",
+                type: "line",
+                stack: "Total",
+                data: unitarr,
+              },
+            ],
+          };
+            const option2 = {
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["基金"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: datearr30,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "基金",
+                type: "line",
+                stack: "Total",
+                data: unitarr30,
+              },
+            ],
+          };
+        const option3 = {
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["基金"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: datearr90,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "基金",
+                type: "line",
+                stack: "Total",
+                data: unitarr90,
+              },
+            ],
+          };
+        const option4 = {
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["基金"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: datearr180,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "基金",
+                type: "line",
+                stack: "Total",
+                data: unitarr180,
+              },
+            ],
+          };
+        const option5 = {
+            tooltip: {
+              trigger: "axis",
+            },
+            legend: {
+              data: ["基金"],
+            },
+            grid: {
+              left: "3%",
+              right: "4%",
+              bottom: "3%",
+              containLabel: true,
+            },
+            toolbox: {
+              feature: {
+                saveAsImage: {},
+              },
+            },
+            xAxis: {
+              type: "category",
+              boundaryGap: false,
+              data: datearr365,
+            },
+            yAxis: {
+              type: "value",
+            },
+            series: [
+              {
+                name: "基金",
+                type: "line",
+                stack: "Total",
+                data: unitarr365,
+              },
+            ],
+          };
+            echart.setOption(option);
+            echart2.setOption(option2);
+            echart3.setOption(option3);
+            echart4.setOption(option4);
+            echart5.setOption(option5);
+            })
         },
-        legend: {
-          data: ["基金1", "基金2", "基金3", "基金4", "基金5"],
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true,
-        },
-        toolbox: {
-          feature: {
-            saveAsImage: {},
-          },
-        },
-        xAxis: {
-          type: "category",
-          boundaryGap: false,
-          data: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            name: "基金1",
-            type: "line",
-            stack: "Total",
-            data: [120, 132, 101, 134, 90, 230, 210],
-          },
-          {
-            name: "基金2",
-            type: "line",
-            stack: "Total",
-            data: [220, 182, 191, 234, 290, 330, 310],
-          },
-          {
-            name: "基金3",
-            type: "line",
-            stack: "Total",
-            data: [150, 232, 201, 154, 190, 330, 410],
-          },
-          {
-            name: "基金4",
-            type: "line",
-            stack: "Total",
-            data: [320, 332, 301, 334, 390, 330, 320],
-          },
-          {
-            name: "基金5",
-            type: "line",
-            stack: "Total",
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-          },
-        ],
-      };
-
-      // 使用刚指定的配置项和数据显示图表。
-      echart.setOption(option);
+    changeIsShow0: function(){
+        this.show0=true;
+        this.show30=false;
+        this.show90=false;
+        this.show180=false;
+        this.show365=false;
+    },
+    changeIsShow30:function(){
+        this.show0=false;
+        this.show30=true;
+        this.show90=false;
+        this.show180=false;
+        this.show365=false;
+    },
+    changeIsShow90:function(){
+        this.show0=false;
+        this.show30=false;
+        this.show90=true;
+        this.show180=false;
+        this.show365=false;
+    },
+    changeIsShow180:function(){
+        this.show0=false;
+        this.show30=false;
+        this.show90=false;
+        this.show180=true;
+        this.show365=false;
+    },
+    changeIsShow365:function(){
+        this.show0=false;
+        this.show30=false;
+        this.show90=false;
+        this.show180=false;
+        this.show365=true;
     },
   },
 };
+
 </script>
 
 <style lang="less">

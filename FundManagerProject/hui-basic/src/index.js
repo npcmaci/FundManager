@@ -4,9 +4,9 @@ import h_ui from 'h_ui'
 import * as echarts from 'echarts'
 import "./reset.css";
 import 'h_ui/dist/h_ui.min.css'
-
 Vue.use(h_ui)
 Vue.prototype.$echarts = echarts;
+//Vue.component('ECharts',ECharts)
 
 
 const app = hCore({

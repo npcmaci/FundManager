@@ -259,7 +259,7 @@ export default {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
-          search: this.value
+          search: 1
         }
       }).then(res => {
         console.log(res)
