@@ -5,7 +5,7 @@
       <h-row name="flex">
         <h-col span="5" class="layout-menu-left">
           <h-menu
-            active-name="1-0"
+            :active-name="activeName"
             theme="dark"
             width="auto"
             :open-names="['1','2', '3', '4']"
@@ -102,5 +102,10 @@ export default{
       this.$hCore.navigate(path);
     },
   },
+  data() {
+    return {
+      activeName: "1-0",
+    }
+  }
 }
 </script>
