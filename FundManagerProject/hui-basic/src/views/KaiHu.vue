@@ -85,7 +85,7 @@
           ></h-input>
         </h-form-item>
         <h-form-item label="职业" prop="job">
-          <h-checkbox-group v-model="formValidate.interest">
+          <h-checkbox-group v-model="formValidate.job">
             <h-checkbox label="学生"></h-checkbox>
             <h-checkbox label="政府人员"></h-checkbox>
             <h-checkbox label="老师"></h-checkbox>
@@ -151,28 +151,23 @@ export default {
     return {
       current: 0,
       formValidate: {
-        password: "",
-        passwordCheck: "",
+        passwd: "",
+        passwdCheck: "",
         type: "",
-        name: "",
         mail: "",
-        city: "",
         gender: "",
         job: [],
         date: "",
         card: "",
         cardnumber: "",
-        desc: "",
       },
       ruleValidate: {
         passwd: [{ validator: validatePass, trigger: "blur" }],
         passwdCheck: [{ validator: validatePassCheck, trigger: "blur" }],
-        name: [{ required: true, message: "姓名不能为空", trigger: "blur" }],
         mail: [
           { required: false, message: "邮箱不能为空", trigger: "blur" },
           { type: "email", message: "邮箱格式不正确", trigger: "blur" },
         ],
-        city: [{ required: false, message: "请选择城市", trigger: "change" }],
         gender: [{ required: true, message: "请选择性别", trigger: "change" }],
         job: [
           {
@@ -212,7 +207,10 @@ export default {
   methods: {
     handleSubmit(name) {
       this.$hMessage.success("提交成功!");
-      this.$router.push("/kaihu2");
+      this.$router.push({
+        name: "kaihu2",
+        params: { olddata: this.formValidate },
+      });
       // this.$refs[name].validate((valid) => {
       //   if (valid) {
       //   } else {
