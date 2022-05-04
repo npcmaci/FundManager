@@ -18,7 +18,7 @@
         >{{ item.label }}</h-option
       >
     </h-select>
-    <h-button type = "primary" style = "margin-left: 150px; margin-bottom: 20px;">购买该基金</h-button>
+    <h-button type = "primary" style = "margin-left: 150px; margin-bottom: 20px;" @click = "jump('/buy')">购买该基金</h-button>
     </div>
     <!-- <input type="button" value="显示近180天数据" @click="changeIsShow180">
     <input type="button" value="显示近1年数据" @click="changeIsShow365">
@@ -514,6 +514,9 @@ export default {
       }else {
         this.changeIsShow0()
       }
+    },
+    jump(path) {
+      this.$hCore.navigate(path);
     },
   },
 };
