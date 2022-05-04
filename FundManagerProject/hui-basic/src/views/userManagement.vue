@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h-button type = "primary" style="margin-top: 10px">新增用户</h-button>
+      <h-button type = "primary" style="margin-top: 10px" @click = "jump('\Kaihu')">新增用户</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
@@ -13,7 +13,7 @@
         clearable
       ></h-input>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px" @click = "load">查询</h-button>
-      <p class="demo-data" v-show="this.value">{{ value }}</p>
+      <!-- <p class="demo-data" v-show="this.value">{{ value }}</p> -->
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
     <h-table stripe
@@ -23,11 +23,32 @@
     ></h-table>
     <h-page
       :total="totalNum"
-      @on-change="dataChange"
+      @on-change="load"
       show-elevator
       show-total
       :page-size="5"
+      :current.sync="currentPage"
     ></h-page>
+    <h-msg-box
+      v-model="msgBoxVisible"
+      :escClose="true"
+      title="新建用户"
+      @on-ok="ok"
+      @on-cancel="cancel"
+      :beforeEscClose="beforetest"
+    >
+    <h-form :model="formLeft" label-position="left" :label-width="120">
+      <h-form-item label="标题">
+        <h-input v-model="formLeft.input1"></h-input>
+      </h-form-item>
+      <h-form-item label="标题名称">
+        <h-input v-model="formLeft.input2"></h-input>
+      </h-form-item>
+      <h-form-item label="标题名称对齐">
+        <h-input v-model="formLeft.input3"></h-input>
+      </h-form-item>
+    </h-form>
+    </h-msg-box>
   </div>
 </template>
 
@@ -38,7 +59,9 @@ const USER_TYPE_ORM = {
     company: "企业",
     person: "个人",
 };
-
+function sleep (time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
 function handleEdit(params) {
   console.log(params);
   console.log('edit an user:', params.index);
@@ -46,9 +69,13 @@ function handleEdit(params) {
 
 function deleteUser(params) {
   console.log('delete an user:', params.index);
+  request.delete("http://localhost:9090/user/" + params.row.userId);
+  window.load();
+  window.load();
+  window.load();
+  window.load();
   alert("successfully delete!!!");
 }
-
 var columns = [
       {
         title: "用户编号",
@@ -115,7 +142,7 @@ var columns = [
                 on: {
                   click: () => {
                     deleteUser(params);
-                    console.log(params.index);
+                    console.log(params);
                   },
                 },
               },
@@ -126,7 +153,7 @@ var columns = [
       },
     ];
 
-    var Data = [/*
+    var Data = [
       {
         userID: "000001",
         userName: "张三一",
@@ -234,7 +261,7 @@ var columns = [
         certificateType: "身份证",
         certificateNumber: "1233****61",
         riskLevel: "2级",
-      },*/
+      },
     ];
 
 import request from "@/utils/request"
@@ -244,36 +271,59 @@ export default {
     console.log(this.$route);
     // console.log('@@@', data)
     return {
-      value: "",
+      value: "",//搜索框
+      formLeft: {//和数据库一一对应
+        input1: "",
+        input2: "",
+        input3: "",
+      },
+      msgBoxVisible: false,
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
+      currentPage: 1,
     };
   },
   created() {
     this.load()
+  },
+  mounted() {
+    //将Vue方法传到全局对象window中
+    window.load = this.load;
   },
   methods: {
     load() {
       request.get("http://localhost:9090/user",{
         params: {
           pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          search: 1
+          pageSize: 5,
+          search: this.value
         }
       }).then(res => {
-        console.log(res)
         this.data = res.data.records
         this.totalNum = res.data.total
       })
     },
+    add () {
+      this.msgBoxVisible = true;
+      this.formLeft = {};
+    },
+    beforetest() {
+      return true;
+    },
     ok() {
+      request.post("http://localhost:9090/transaction", this.formLeft).then(res => {
+        console.log(res)
+      })
       this.$hMessage.info("点击了确定");
-      console.log('delete a info');
+      console.log('点击了确定~');
     },
     cancel() {
       this.$hMessage.info("点击了取消");
       console.log('cancel to delete');
+    },
+    jump(path) {
+      this.$hCore.navigate(path);
     },
     pageChange(index) {
       console.log(index);

@@ -8,7 +8,7 @@
             active-name="1-0"
             theme="dark"
             width="auto"
-            :open-names="['1', '4']"
+            :open-names="['1','2', '3', '4']"
           >
             <div class="layout-logo-left"></div>
             <h-submenu name="1">
@@ -17,8 +17,8 @@
                 产品管理
               </template>
               <router-link to="/home"><h-menu-item name="1-0">产品列表</h-menu-item></router-link>
-              <router-link to="/PageTwo"><h-menu-item name="1-2">新建基金</h-menu-item></router-link>
-              <router-link to="/PageThree"><h-menu-item name="1-3">编辑产品</h-menu-item></router-link>
+              <router-link to="/newProduct"><h-menu-item name="1-2">新建基金</h-menu-item></router-link>
+              <router-link to="/editProduct"><h-menu-item name="1-3">编辑产品</h-menu-item></router-link>
               <router-link to="/detail"><h-menu-item name="1-4">详情页</h-menu-item></router-link>
             </h-submenu>
 
@@ -28,7 +28,7 @@
                 用户管理
               </template>
               <router-link to="/userManagement"><h-menu-item name="2-1">用户列表</h-menu-item></router-link>
-              <router-link to="/PageOne"><h-menu-item name="2-2">开户</h-menu-item></router-link>
+              <router-link to="/KaiHu"><h-menu-item name="2-2">开户</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="3">
@@ -37,7 +37,6 @@
                 业务查询
               </template>
               <router-link to="/searchTransaction"><h-menu-item name="3-1">业务列表</h-menu-item></router-link>
-              <router-link to="/PageTwo"><h-menu-item name="3-2">撤销业务</h-menu-item></router-link>
             </h-submenu>
 
             <h-submenu name="4">
@@ -45,9 +44,8 @@
                 <h-icon name="mail"></h-icon>
                 交易管理
               </template>
-              <h-menu-item name="4-1">申购</h-menu-item>
-              <h-menu-item name="4-2">赎回</h-menu-item>
-              <h-menu-item name="4-3">个人账户</h-menu-item>
+              <router-link to="/buy"><h-menu-item name="4-1">申购</h-menu-item></router-link>
+              <router-link to="/sell"><h-menu-item name="4-2">赎回</h-menu-item></router-link>
             </h-submenu>
 
           </h-menu>
