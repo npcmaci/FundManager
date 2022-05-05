@@ -41,14 +41,17 @@
           v-model="formItem.money"
           bigTips
           style="margin-bottom: 8px"
-          ></h-typefield
-        >
+        ></h-typefield>
       </h-form-item>
       <h-form-item>
-        <router-link to="/buy"><h-button type="ghost" size = "large"
-          >上一步</h-button
-        ></router-link>
-        <h-button type="primary" size="large" @click="modal1 = true" style="margin-left: 100px"
+        <router-link to="/buy"
+          ><h-button type="ghost" size="large">上一步</h-button></router-link
+        >
+        <h-button
+          type="primary"
+          size="large"
+          @click="modal1 = true"
+          style="margin-left: 100px"
           >下一步</h-button
         >
         <h-msg-box
@@ -71,10 +74,10 @@ export default {
   data() {
     return {
       formItem: {
-        bank:"",
-        bankAccounts:"",
+        bank: "",
+        bankAccounts: "",
         password: "",
-        money:"",
+        money: "",
         ...this.$route.params.olddata,
       },
       modal1: false,
@@ -89,24 +92,39 @@ export default {
     },
     ok() {
       this.$hMessage.success("交易成功");
-      this.$router.push('/buy')
-      this.instance('success')
+      this.$router.push("/buy");
+      this.instance("success");
     },
     cancel() {
       this.$hMessage.info("交易取消");
     },
     instance(type) {
-        const title = "赎回成功！";
-        const content = '<p style="font-size:16px">买入价格以15：00前净值确定</p><p style="font-size:16px">收益于T+1后可以查看</p>';
-        switch (type) {
-          case "success":
-            this.$hMsgBox.success({
-              title: title,
-              content: content,
-            });
-        }
-        this.$router.push('/buy')
-      },
+      const title = "赎回成功！";
+      const content =
+        '<p style="font-size:16px">买入价格以15：00前净值确定</p><p style="font-size:16px">收益于T+1后可以查看</p>';
+      switch (type) {
+        case "success":
+          this.$hMsgBox.success({
+            title: title,
+            content: content,
+          });
+      }
+      this.$router.push("/buy");
+    },
+  },
+  computed: {
+    form() {
+      return {
+        transactionTime: "",
+        userId: this.formItem.userId,
+        userName: this.formItem.userName,
+        transactionType: "buy",
+        transactionAmount: "500",
+        bankAccounts: this.formItem.bankAccounts,
+        liquidateStatus: "on",
+        fundCode: this.formItem.fundCode,
+      };
+    },
   },
 };
 </script>

@@ -19,7 +19,7 @@
         :rules="ruleValidate"
         :label-width="80"
         label-position="left"
-        style="max-width: 1300px; padding-top: 30px; margin: 10px"
+        style="min-width: 800px; padding-top: 30px; margin: 10px"
       >
         <h-form-item label="发卡银行" required>
           <h-select v-model="formValidate.bank" placeholder="请选择">
@@ -120,20 +120,6 @@ export default {
     };
   },
   methods: {
-    // computed: {
-    //   form() {
-    //     return {
-    //       form1: {
-    //         userName: this.formValidate.name,
-    //         userType: this.formValidate.type,
-    //         phoneNumber: this.formValidate.phone,
-    //         certificateType: this.formValidate.card,
-    //         certificateNumber: this.formValidate.cardnumber,
-    //         risklevel: "保守型",
-    //       },
-    //     };
-    //   },
-    // },
     handleSubmit(name) {
       request
         .post("/rssd", {
@@ -154,6 +140,18 @@ export default {
     },
     handleReset(name) {
       this.$refs[name].resetFields();
+    },
+  },
+  computed: {
+    form() {
+      return {
+        userName: this.formValidate.name,
+        userType: this.formValidate.type,
+        phoneNumber: this.formValidate.phone,
+        certificateType: this.formValidate.card,
+        certificateNumber: this.formValidate.cardnumber,
+        risklevel: "保守型",
+      };
     },
   },
 };
