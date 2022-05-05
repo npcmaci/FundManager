@@ -123,11 +123,12 @@ var columns = [
                 },
                 on: {
                   click: () => {
-                    handleEdit(params)
+                    // handleEdit(params)
+                    jump("/userDetail");
                   }
                 },
               },
-              "编辑"
+              "查看"
             ),
             h(
               "Button",
@@ -290,6 +291,7 @@ export default {
   mounted() {
     //将Vue方法传到全局对象window中
     window.load = this.load;
+    window.jump = this.jump;
   },
   methods: {
     load() {
