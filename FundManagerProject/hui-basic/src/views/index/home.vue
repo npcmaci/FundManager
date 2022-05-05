@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h-button type = "primary" style="margin-top: 10px" @click = "jump('/newProduct')">新建</h-button>
+      <h-button type = "primary" style="margin-top: 10px" @click = "jump2('/newProduct')">新建</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">编辑</h-button>
       <h-button type = "primary" style="margin-left: 5px; margin-top: 10px">导出</h-button>
     </div>
@@ -271,6 +271,9 @@ export default {
           name: path,
           params: { id: id },
         });
+    },
+    jump2(path) {
+      this.$hCore.navigate(path);
     },
     ok() {
       request.post("http://localhost:9090/transaction", this.formLeft).then(res => {
