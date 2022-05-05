@@ -25,7 +25,7 @@
       @on-change="dataChange"
       show-elevator
       show-total
-      :page-size="5"
+      :page-size="10"
     ></h-page>
     <h-msg-box
       v-model="msgBoxVisible"
@@ -258,7 +258,7 @@ export default {
         input3: "",
       },
       msgBoxVisible: false,
-      data: Data.slice(0, 5),
+      data: Data.slice(0, 10),
       columns: columns,
       totalNum: Data.length,
     };
@@ -332,7 +332,7 @@ export default {
       console.log(value);
     },
     dataChange(i) {
-      this.data = Data.slice((i - 1) * 5, i * 5);
+      this.data = Data.slice((i - 1) * 10, i * 10);
     },
     getList() {
       core

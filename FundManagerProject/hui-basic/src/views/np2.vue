@@ -3,17 +3,17 @@
     <h1 style="margin-top: 10px">新建基金</h1>
     <div>
       <h-tabs>
-        <h-tab-pane label="基础信息" icon="ios-list-outline">
-          <div>
-            <h-form
+           <!-- <h-tab-pane label="基础信息" icon="ios-list-outline">
+           <h-form
               :model="formItem"
               :label-width="80"
               label-position="left"
-              style="max-width: 700px; margin-left: 200px"
+              style="max-width: 700px; margin-left: 30px"
             >
               <h-form-item label="基金代码">
                 <h-input
                   v-model="formItem.fundCode"
+                  
                   placeholder="请输入相关基金代码"
                 ></h-input>
               </h-form-item>
@@ -107,7 +107,6 @@
                   v-model="formItem.userName"
                   placeholder="请输入提交者名称"
                 ></h-input>
-
               </h-form-item>
               <h-form-item label="基金介绍">
                 <h-input
@@ -119,27 +118,20 @@
                 ></h-input>
               </h-form-item>
               <h-form-item>
-                <router-link to="/np2"
-                  ><h-button
-                    type="primary"
-                    style="margin-left: 50px"
-                    @click="handleSubmit"
-                    >下一步</h-button
-                  ></router-link
+                <h-button type="ghost" @click="oooo">下一步</h-button>
+                <h-button type="primary" style="margin-left: 200px"
+                  >提交</h-button
                 >
-                <h-button type="ghost" style="margin-left: 200px"
-                  >取消</h-button
-                >
+                <h-button type="ghost" style="margin-left: 30px">取消</h-button>
               </h-form-item>
             </h-form>
-          </div>
-        </h-tab-pane>
+          </h-tab-pane>-->
         <h-tab-pane label="申购限制" icon="financial_fill">
-          <h-form 
+          <h-form
             :model="formItem"
             :label-width="100"
             label-position="left"
-            style="max-width: 700px; margin-left: 30px; margin-top: 20px"
+            style="max-width: 700px; margin-left: 280px; margin-top: 60px"
           >
             <h-form-item label="申购者限制">
               <h-radio-group v-model="formItem.userLimit">
@@ -175,15 +167,18 @@
               </h-select>
             </h-form-item>
             <h-form-item>
-              <h-button
-                type="primary"
-                style="margin-left: 200px; margin-top: 100px"
-                >提交</h-button
+              <router-link to="/newProduct"
+                ><h-button
+                  type="primary"
+                  style="margin-left: 0px; margin-top: 100px;"
+                  @click="instance('success')"
+                  >确定</h-button
+                ></router-link
               >
-              <h-button
-                type="ghost"
-                style="margin-left: 30px; margin-top: 100px"
-                >取消</h-button
+              <router-link to="/newProduct"
+                ><h-button type="ghost" style="margin-left: 100px; margin-top: 100px"
+                  >取消</h-button
+                ></router-link
               >
             </h-form-item>
           </h-form>
@@ -209,9 +204,9 @@ export default {
         fundType: [],
         userName: "",
         fundIntroduction: "",
-        userLimit: "",
+        userLimit: "all",
         minAmount: 10,
-        userRiskLevel: "",
+        userRiskLevel: "all",
       },
     };
   },
@@ -220,33 +215,22 @@ export default {
       newtime = date + time;
       console.log(newtime);
     },
-    handleSubmit(name) {
-      this.$hMessage.success("操作成功!");
-
-      // this.$refs[name].validate((valid) => {
-      //   if (valid) {
-      //   } else {
-      //     this.$hMessage.error("表单验证失败!");
-      //   }
-      //});
+    instance(type) {
+      const title = "新建基金请求发起成功！";
+      const content =
+        '<p style="font-size:16px">待后台审核后基金正式建立成功！</p><p style="font-size:16px">您可以在基金列表查询到所建立的基金哦！</p>';
+      switch (type) {
+        case "success":
+          this.$hMsgBox.success({
+            title: title,
+            content: content,
+          });
+      }
+      this.$router.push("/Kaihu");
     },
   },
 };
 </script>
 
 <style scoped>
-.h-form .h-form-item-label {
-  text-align: right;
-  float: left;
-  font-size: 16px;
-  color: #495060;
-  background: transparent;
-  line-height: 32px;
-  padding: 0 12px 0 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
 </style>

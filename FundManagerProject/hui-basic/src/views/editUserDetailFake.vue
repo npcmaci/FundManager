@@ -85,21 +85,12 @@
                 placeholder="请输入银行卡号"
               ></h-input>
             </h-form-item>
-            <!-- <h-form-item label="密码">
+            <h-form-item label="密码">
               <h-input
                 v-model="bankCard.cardPassword"
                 placeholder="请输入银行卡密码"
               ></h-input>
-            </h-form-item> -->
-            <h-form-item prop="password" label="密码">
-        <h-input
-          type="password"
-          v-model="bankCard.cardPassword"
-          placeholder="请输入银行卡密码"
-        >
-          <h-icon name="locked" slot="prepend"></h-icon>
-        </h-input>
-      </h-form-item>
+            </h-form-item>
           </h-form>
         </h-msg-box>
       </h-form-item>
@@ -203,6 +194,11 @@ export default {
           number: "1528710063851",
           amount: "8984",
         },
+        {
+          series: "5",
+          number: "1234567890",
+          amount: "0",
+        },
       ],
     };
   },
@@ -218,7 +214,6 @@ export default {
       return true;
     },
     ok() {
-      this.jump('/editUserDetailFake');
       this.$hMessage.success("新增成功");
     },
     cancel() {

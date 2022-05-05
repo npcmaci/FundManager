@@ -17,6 +17,11 @@ export default initRouter(
               name: 'index-home',
               path: 'home',
               component: IndexHome
+            },
+            {
+              name: 'index-userDetailFake',
+              path: 'userDetailFake',
+              component: IndexUserDetailFake
             }
           ]
         },
@@ -41,6 +46,11 @@ export default initRouter(
           component: EditUserDetail
         },
         {
+          name: 'editUserDetailFake',
+          path: 'editUserDetailFake',
+          component: EditUserDetailFake
+        },
+        {
           name: 'KaiHu',
           path: 'KaiHu',
           component: KaiHu
@@ -59,6 +69,11 @@ export default initRouter(
           name: 'newProduct',
           path: 'newProduct',
           component: NewProduct
+        },
+        {
+          name: 'np2',
+          path: 'np2',
+          component: Np2
         },
         {
           name: 'searchTransaction',
@@ -97,6 +112,11 @@ function Index() {
 function IndexHome() {
   return import(/* webpackChunkName: "index-home" */ '@/views/index/home.vue')
 }
+function IndexUserDetailFake() {
+  return import(
+    /* webpackChunkName: "index-userDetailFake" */ '@/views/index/userDetailFake.vue'
+  )
+}
 function Buy() {
   return import(/* webpackChunkName: "buy" */ '@/views/buy.vue')
 }
@@ -111,6 +131,11 @@ function EditUserDetail() {
     /* webpackChunkName: "editUserDetail" */ '@/views/editUserDetail.vue'
   )
 }
+function EditUserDetailFake() {
+  return import(
+    /* webpackChunkName: "editUserDetailFake" */ '@/views/editUserDetailFake.vue'
+  )
+}
 function KaiHu() {
   return import(/* webpackChunkName: "KaiHu" */ '@/views/KaiHu.vue')
 }
@@ -122,6 +147,9 @@ function Kaihu3() {
 }
 function NewProduct() {
   return import(/* webpackChunkName: "newProduct" */ '@/views/newProduct.vue')
+}
+function Np2() {
+  return import(/* webpackChunkName: "np2" */ '@/views/np2.vue')
 }
 function SearchTransaction() {
   return import(

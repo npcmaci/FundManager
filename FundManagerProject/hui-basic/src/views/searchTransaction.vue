@@ -25,10 +25,9 @@
       @on-change="load"
       show-elevator
       show-total
-      :page-size="5"
+      :page-size="10"
       :current.sync="currentPage"
     ></h-page>
-    <h-button type="primary" @click="model1 = true">显示对话框</h-button>
     <h-msg-box 
     v-model="msgBoxVisible"
     :escClose="true"
@@ -49,20 +48,6 @@
         >
       </div>
     </h-msg-box>
-    <div>
-      <h-msg-box
-              v-model="model1"
-              :escClose="true"
-              title="普通的MsgBox对话框标题"
-              @on-ok="ok"
-              @on-cancel="cancel"
-              :beforeEscClose="beforetest"
-      >
-        <p>对话框内容</p>
-        <p>对话框内容</p>
-        <p>对话框内容</p>
-      </h-msg-box>
-    </div>
   </div>
 </template>
 
@@ -332,7 +317,7 @@ export default {
         input3: "",
       },
       msgBoxVisible: false,
-      data: Data.slice(0, 5),
+      data: Data.slice(0, 10),
       columns: columns,
       totalNum: Data.length,
       currentPage: 1,
@@ -395,7 +380,7 @@ export default {
       console.log(value);
     },
     dataChange(i) {
-      this.data = Data.slice((i - 1) * 5, i * 5);
+      this.data = Data.slice((i - 1) * 10, i * 10);
       // console.log(i);
     },
     getList() {

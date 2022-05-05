@@ -26,7 +26,7 @@
       @on-change="load"
       show-elevator
       show-total
-      :page-size="5"
+      :page-size="10"
       :current.sync="currentPage"
     ></h-page>
     <h-msg-box
@@ -279,7 +279,7 @@ export default {
         input3: "",
       },
       msgBoxVisible: false,
-      data: Data.slice(0, 5),
+      data: Data.slice(0, 10),
       columns: columns,
       totalNum: Data.length,
       currentPage: 1,
@@ -298,7 +298,7 @@ export default {
       request.get("http://localhost:9090/user",{
         params: {
           pageNum: this.currentPage,
-          pageSize: 5,
+          pageSize: 10,
           search: this.value
         }
       }).then(res => {
@@ -334,7 +334,7 @@ export default {
       console.log(value);
     },
     dataChange(i) {
-      this.data = Data.slice((i - 1) * 5, i * 5);
+      this.data = Data.slice((i - 1) * 10, i * 10);
       // console.log(i);
     },
     getList() {
