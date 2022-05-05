@@ -28,12 +28,87 @@
     <div id="productLineEchart90" v-show="show90" class="line-echart"></div>
     <div id="productLineEchart180" v-show="show180" class="line-echart"></div>
     <div id="productLineEchart365" v-show="show365" class="line-echart"></div>
+  <div class="mydiv">
+    <h-card style="width: 150px;">
+      <p slot="title">
+        <h-icon name="ios-film-outline"></h-icon>
+        基金价格
+      </p>
+      <ul>
+    <h-icon name="ios-film-outline"></h-icon>
+        {{this.data2[0].price}}
+    </ul>
+    </h-card>
+  </div>
+  <div class="mydiv">
+      <h-card style="width: 150px;">
+        <p slot="title">
+          <h-icon name="ios-film-outline"></h-icon>
+          涨跌幅度
+        </p>
+        <ul>
+        <span style="this.judge()">
+        <h-icon name="ios-film-outline" ></h-icon>
+            {{this.data2[0].z0}}%
+        </span>
+      </ul>
+      </h-card>
+  </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            基金类型
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].fundType}}
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近1月涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z1}}%
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近3月涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z2}}%
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近1年涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z3}}%
+        </ul>
+        </h-card>
+    </div>
     <h-table stripe
       :data="data2"
       :columns="columns2"
       style="margin-bottom: 8px;"
       ></h-table>
   </div>
+
 </div>
 </template>
 
@@ -520,6 +595,14 @@ export default {
     jump(path) {
       this.$hCore.navigate(path);
     },
+    judge(){
+        if (this.data2[0].z0 <=0){
+            return {'color':'red'}
+        }
+        if (this.data2[0].z0 >0){
+            return {'color':'green'}
+        }
+    },
   },
 };
 
@@ -541,5 +624,27 @@ export default {
 .line-echart {
   width: 600px;
   height: 400px;
+}
+.h-card p {
+  margin: 0;
+}
+.h-card ul {
+  padding: 0 !important;
+  li {
+    list-style: none;
+    span {
+      float: right;
+      color: #ffac2d;
+      i:last-child {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.h-card img {
+  height: 85px;
+}
+.mydiv{
+  display: inline-block;
 }
 </style>
