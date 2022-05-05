@@ -12,8 +12,22 @@
           <h-radio label="enterprise">企业用户</h-radio>
         </h-radio-group>
       </h-form-item>
+      <h-form-item label="用户编号">
+        <h-input
+          v-model="form.userId"
+          placeholder="输入赎回的用户编号"
+          style="font size:16px"
+        ></h-input>
+      </h-form-item>
+      <h-form-item label="用户姓名">
+        <h-input
+          v-model="form.userName"
+          placeholder="请输入真实持卡人姓名"
+          style="font size:16px"
+        ></h-input>
+      </h-form-item>
       <h-form-item label="证件选择">
-        <h-select v-model="formItem.select1" placeholder="请选择">
+        <h-select v-model="formItem.certificateType" placeholder="请选择">
           <h-option value="身份证">身份证</h-option>
           <h-option value="护照">护照</h-option>
           <h-option value="港澳通行证">港澳通行证</h-option>
@@ -22,7 +36,7 @@
       </h-form-item>
       <h-form-item label="证件号码">
         <h-input
-          v-model="formItem.input"
+          v-model="formItem.certificateNumber"
           placeholder="输入证件号"
           @on-enter="onenter"
           style="font size:16px"
@@ -30,7 +44,7 @@
       </h-form-item>
       <h-form-item label="基金选择">
         <h-input
-          v-model="formItem.fund"
+          v-model="form.fundCode"
           placeholder="输入赎回基金代码"
           style="font size:16px"
         ></h-input>
@@ -41,13 +55,13 @@
           :min="10"
           :precision="2"
           :step="10"
-          v-model="formItem.value"
+          v-model="form.transactionAmount"
           size="large"
           style="width: 150px"
         ></h-input-number>
       </h-form-item>
       <h-form-item label="存管银行">
-        <h-select v-model="formItem.select2" placeholder="请选择">
+        <h-select v-model="formItem.bank" placeholder="请选择">
           <h-option value="中国工商银行">中国工商银行</h-option>
           <h-option value="中国农业银行">中国农业银行</h-option>
           <h-option value="中国银行">中国银行</h-option>
@@ -60,6 +74,7 @@
         <h-typefield
           type="cardNo"
           placeholder="请输入卡号"
+          v-model="form.bankAccounts"
           bigTips
         ></h-typefield>
       </h-form-item>
@@ -88,15 +103,21 @@ export default {
   data() {
     return {
       formItem: {
-        input: "",
-        fund: "",
-        select1: "",
-        select2: "",
+        bank: "",
+        password: "",
         radio: "person",
-        checkbox: [],
-        switch: true,
-        textarea: "",
-        value: 10,
+        certificateType: "",
+        certificateNumber: "",
+      },
+      form: {
+        transactionTime: "",
+        userId: "",
+        userName: "",
+        transactionType: "sell",
+        transactionAmount: "10",
+        bankAccounts: "",
+        liquidateStatus: "on",
+        fundCode: "",
       },
     };
   },
@@ -156,5 +177,4 @@ export default {
 .h-input {
   font-size: 16px;
 }
-
 </style>

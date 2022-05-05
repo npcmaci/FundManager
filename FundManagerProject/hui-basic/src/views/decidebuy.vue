@@ -7,7 +7,7 @@
       style="max-width: 700px; padding-top: 50px; margin: 100px"
     >
       <h-form-item label="存管银行">
-        <h-select v-model="formItem.select2" placeholder="请选择">
+        <h-select v-model="formItem.bank" placeholder="请选择">
           <h-option value="中国工商银行">中国工商银行</h-option>
           <h-option value="中国农业银行">中国农业银行</h-option>
           <h-option value="中国银行">中国银行</h-option>
@@ -20,6 +20,7 @@
         <h-typefield
           type="cardNo"
           placeholder="请输入卡号"
+          v-model="formItem.bankAccounts"
           bigTips
         ></h-typefield>
       </h-form-item>
@@ -37,9 +38,10 @@
           integerNum="6"
           type="money"
           placeholder="限制在10~100000元"
+          v-model="formItem.money"
           bigTips
           style="margin-bottom: 8px"
-          >woshi</h-typefield
+          ></h-typefield
         >
       </h-form-item>
       <h-form-item>
@@ -69,15 +71,11 @@ export default {
   data() {
     return {
       formItem: {
-        input: "",
-        fund: "",
-        select1: "",
-        select2: "",
-        radio: "person",
-        checkbox: [],
-        switch: true,
-        textarea: "",
+        bank:"",
+        bankAccounts:"",
         password: "",
+        money:"",
+        ...this.$route.params.olddata,
       },
       modal1: false,
     };

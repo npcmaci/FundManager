@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import request from '@/utils/request.js'
+import request from "@/utils/request.js";
 export default {
   data() {
     return {
@@ -109,20 +109,41 @@ export default {
         name: [{ required: true, message: "名字不能为空", trigger: "blur" }],
         city: [{ required: true, message: "请选择城市", trigger: "change" }],
       },
+      // form1: {
+      //   userName: this.formValidate.name,
+      //   userType: this.formValidate.type,
+      //   phoneNumber: this.formValidate.phone,
+      //   certificateType: this.formValidate.card,
+      //   certificateNumber: this.formValidate.cardnumber,
+      //   risklevel: "保守型",
+      // },
     };
   },
   methods: {
+    // computed: {
+    //   form() {
+    //     return {
+    //       form1: {
+    //         userName: this.formValidate.name,
+    //         userType: this.formValidate.type,
+    //         phoneNumber: this.formValidate.phone,
+    //         certificateType: this.formValidate.card,
+    //         certificateNumber: this.formValidate.cardnumber,
+    //         risklevel: "保守型",
+    //       },
+    //     };
+    //   },
+    // },
     handleSubmit(name) {
-      request.post(
-        '/rssd',
-        {
-          card:this.formValidate.card
-        }
-      ).then((res)=>{
-        console.log(res.data);
-      })
+      request
+        .post("/rssd", {
+          card: this.formValidate.card,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
       this.$hMessage.success("提交成功!");
-      this.$router.push('/kaihu3');
+      this.$router.push("/kaihu3");
       // this.$refs[name].validate((valid) => {
       //   if (valid) {
 
@@ -135,7 +156,6 @@ export default {
       this.$refs[name].resetFields();
     },
   },
-
 };
 </script>
 <style scoped>
