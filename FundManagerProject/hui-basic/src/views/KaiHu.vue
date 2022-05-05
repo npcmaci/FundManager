@@ -26,7 +26,7 @@
         <h-form-item label="身份选择" required>
           <h-radio-group v-model="formValidate.type">
             <h-radio label="person">个人</h-radio>
-            <h-radio label="enterprise">企业</h-radio>
+            <h-radio label="company">企业</h-radio>
           </h-radio-group>
         </h-form-item>
         <h-form-item label="性别" prop="gender">

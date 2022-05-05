@@ -7,7 +7,7 @@
       style="max-width: 700px; padding-top: 50px; margin: 100px"
     >
       <h-form-item label="存管银行">
-        <h-select v-model="formItem.select2" placeholder="请选择">
+        <h-select v-model="formItem.bank" placeholder="请选择">
           <h-option value="中国工商银行">中国工商银行</h-option>
           <h-option value="中国农业银行">中国农业银行</h-option>
           <h-option value="中国银行">中国银行</h-option>
@@ -20,6 +20,7 @@
         <h-typefield
           type="cardNo"
           placeholder="请输入卡号"
+          v-model="formItem.bankAccounts"
           bigTips
         ></h-typefield>
       </h-form-item>
@@ -37,16 +38,20 @@
           integerNum="6"
           type="money"
           placeholder="限制在10~100000元"
+          v-model="formItem.money"
           bigTips
           style="margin-bottom: 8px"
-          >woshi</h-typefield
-        >
+        ></h-typefield>
       </h-form-item>
       <h-form-item>
-        <router-link to="/buy"><h-button type="ghost" size = "large"
-          >上一步</h-button
-        ></router-link>
-        <h-button type="primary" size="large" @click="modal1 = true" style="margin-left: 100px"
+        <router-link to="/buy"
+          ><h-button type="ghost" size="large">上一步</h-button></router-link
+        >
+        <h-button
+          type="primary"
+          size="large"
+          @click="modal1 = true"
+          style="margin-left: 100px"
           >下一步</h-button
         >
         <h-msg-box
@@ -69,15 +74,11 @@ export default {
   data() {
     return {
       formItem: {
-        input: "",
-        fund: "",
-        select1: "",
-        select2: "",
-        radio: "person",
-        checkbox: [],
-        switch: true,
-        textarea: "",
+        bank: "",
+        bankAccounts: "",
         password: "",
+        money: "",
+        ...this.$route.params.olddata,
       },
       modal1: false,
     };
@@ -91,24 +92,39 @@ export default {
     },
     ok() {
       this.$hMessage.success("交易成功");
-      this.$router.push('/buy')
-      this.instance('success')
+      this.$router.push("/buy");
+      this.instance("success");
     },
     cancel() {
       this.$hMessage.info("交易取消");
     },
     instance(type) {
-        const title = "赎回成功！";
-        const content = '<p style="font-size:16px">买入价格以15：00前净值确定</p><p style="font-size:16px">收益于T+1后可以查看</p>';
-        switch (type) {
-          case "success":
-            this.$hMsgBox.success({
-              title: title,
-              content: content,
-            });
-        }
-        this.$router.push('/buy')
-      },
+      const title = "赎回成功！";
+      const content =
+        '<p style="font-size:16px">买入价格以15：00前净值确定</p><p style="font-size:16px">收益于T+1后可以查看</p>';
+      switch (type) {
+        case "success":
+          this.$hMsgBox.success({
+            title: title,
+            content: content,
+          });
+      }
+      this.$router.push("/buy");
+    },
+  },
+  computed: {
+    form() {
+      return {
+        transactionTime: "",
+        userId: this.formItem.userId,
+        userName: this.formItem.userName,
+        transactionType: "buy",
+        transactionAmount: "500",
+        bankAccounts: this.formItem.bankAccounts,
+        liquidateStatus: "on",
+        fundCode: this.formItem.fundCode,
+      };
+    },
   },
 };
 </script>

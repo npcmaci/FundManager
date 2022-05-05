@@ -95,6 +95,7 @@ var columns = [
         key: "address",
       },
       {
+
         title: "操作",
         key: "action",
         render: (h, params) => {
@@ -107,9 +108,12 @@ var columns = [
                   size: "small",
                 },
                 on: {
+
                   click: () => {
                     //this.show(params.index);
                     console.log(params.index);
+                    console.log(params.row.id);//根据这个ID查数据库
+                    jump('\detail',params.row.id);
                   },
                 },
               },
@@ -156,7 +160,7 @@ var columns = [
     ];
 var Data = [
       {
-        id: "C001",
+        id: "001",
         productName: "AAaaaa",
         productType: "special",
         productCategory: "基金",
@@ -287,16 +291,29 @@ export default {
   //     this.getList();
   //   }
   // },
+  mounted(){
+    window.jump = this.jump;
+  },
   methods: {
     add () {
       this.msgBoxVisible = true;
       this.formLeft = {};
     },
+    show() {
+        this.$router.push({
+            name: "\detail",
+            params: { id: params.row.id },
+          });
+    },
     beforetest() {
       return true;
     },
-    jump(path) {
-      this.$hCore.navigate(path);
+    jump(path,id) {
+      console.log(id)
+      this.$router.push({
+          name: path,
+          params: { id: id },
+        });
     },
     ok() {
       request.post("http://localhost:9090/transaction", this.formLeft).then(res => {

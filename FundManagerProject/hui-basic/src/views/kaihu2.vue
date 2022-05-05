@@ -19,7 +19,7 @@
         :rules="ruleValidate"
         :label-width="80"
         label-position="left"
-        style="max-width: 1300px; padding-top: 30px; margin: 10px"
+        style="min-width: 800px; padding-top: 30px; margin: 10px"
       >
         <h-form-item label="发卡银行" required>
           <h-select v-model="formValidate.bank" placeholder="请选择">
@@ -81,7 +81,7 @@
   </div>
 </template>
 <script>
-import request from '@/utils/request.js'
+import request from "@/utils/request.js";
 export default {
   data() {
     return {
@@ -109,20 +109,27 @@ export default {
         name: [{ required: true, message: "名字不能为空", trigger: "blur" }],
         city: [{ required: true, message: "请选择城市", trigger: "change" }],
       },
+      // form1: {
+      //   userName: this.formValidate.name,
+      //   userType: this.formValidate.type,
+      //   phoneNumber: this.formValidate.phone,
+      //   certificateType: this.formValidate.card,
+      //   certificateNumber: this.formValidate.cardnumber,
+      //   risklevel: "保守型",
+      // },
     };
   },
   methods: {
     handleSubmit(name) {
-      request.post(
-        '/rssd',
-        {
-          card:this.formValidate.card
-        }
-      ).then((res)=>{
-        console.log(res.data);
-      })
+      request
+        .post("/rssd", {
+          card: this.formValidate.card,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
       this.$hMessage.success("提交成功!");
-      this.$router.push('/kaihu3');
+      this.$router.push("/kaihu3");
       // this.$refs[name].validate((valid) => {
       //   if (valid) {
 
@@ -135,7 +142,18 @@ export default {
       this.$refs[name].resetFields();
     },
   },
-
+  computed: {
+    form() {
+      return {
+        userName: this.formValidate.name,
+        userType: this.formValidate.type,
+        phoneNumber: this.formValidate.phone,
+        certificateType: this.formValidate.card,
+        certificateNumber: this.formValidate.cardnumber,
+        risklevel: "保守型",
+      };
+    },
+  },
 };
 </script>
 <style scoped>

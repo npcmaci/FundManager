@@ -28,12 +28,87 @@
     <div id="productLineEchart90" v-show="show90" class="line-echart"></div>
     <div id="productLineEchart180" v-show="show180" class="line-echart"></div>
     <div id="productLineEchart365" v-show="show365" class="line-echart"></div>
+  <div class="mydiv">
+    <h-card style="width: 150px;">
+      <p slot="title">
+        <h-icon name="ios-film-outline"></h-icon>
+        基金价格
+      </p>
+      <ul>
+    <h-icon name="ios-film-outline"></h-icon>
+        {{this.data2[0].price}}
+    </ul>
+    </h-card>
+  </div>
+  <div class="mydiv">
+      <h-card style="width: 150px;">
+        <p slot="title">
+          <h-icon name="ios-film-outline"></h-icon>
+          涨跌幅度
+        </p>
+        <ul>
+        <span style="this.judge()">
+        <h-icon name="ios-film-outline" ></h-icon>
+            {{this.data2[0].z0}}%
+        </span>
+      </ul>
+      </h-card>
+  </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            基金类型
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].fundType}}
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近1月涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z1}}%
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近3月涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z2}}%
+        </ul>
+        </h-card>
+    </div>
+    <div class="mydiv">
+        <h-card style="width: 150px;">
+          <p slot="title">
+            <h-icon name="ios-film-outline"></h-icon>
+            近1年涨跌幅
+          </p>
+          <ul>
+        <h-icon name="ios-film-outline"></h-icon>
+            {{this.data2[0].z3}}%
+        </ul>
+        </h-card>
+    </div>
     <h-table stripe
       :data="data2"
       :columns="columns2"
       style="margin-bottom: 8px;"
       ></h-table>
   </div>
+
 </div>
 </template>
 
@@ -161,17 +236,20 @@ export default {
     console.log(this.$route);
     // console.log('@@@', data)
     return {
+      formItem: {
+        ...this.$route.params,
+      },
       show0:true,
       show30:false,
       show90:false,
       show180:false,
       show365:false,
-      fundName:"xxxx",
       value: "",
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
       data2: Data2.slice(0, 5),
+      fundName :"xxx",
       columns2: columns2,
       selectTime: "",
       dayList: [
@@ -206,11 +284,12 @@ export default {
     load1() {
     request.get("http://localhost:9090/Pp",{
       params: {
-        pageNum: this.currentPage,
+        pageNum: this.$route.params.id,
         pageSize: this.pageSize,
         search: this.value
       }
     }).then(res => {
+      console.log(this.$route)
       console.log(res)
       this.data = res.data
       this.totalNum = res.data.total
@@ -235,17 +314,19 @@ export default {
     load2() {
         request.get("http://localhost:9090/Product_i",{
           params: {
-            fondId: 1,
+            fondId: this.$route.params.id,
           }
         }).then(res => {
           console.log(res)
+          this.fundName=res.data[0].fundName
           this.data2 = res.data
           this.data2[0].established=this.data2[0].established.substring(0,10)})
+
     },
     drawLineEchart() {
         request.get("http://localhost:9090/Pp",{
               params: {
-                pageNum: this.currentPage,
+                pageNum: this.$route.params.id,
                 pageSize: this.pageSize,
                 search: this.value
               }
@@ -518,6 +599,14 @@ export default {
     jump(path) {
       this.$hCore.navigate(path);
     },
+    judge(){
+        if (this.data2[0].z0 <=0){
+            return {'color':'red'}
+        }
+        if (this.data2[0].z0 >0){
+            return {'color':'green'}
+        }
+    },
   },
 };
 
@@ -539,5 +628,27 @@ export default {
 .line-echart {
   width: 600px;
   height: 400px;
+}
+.h-card p {
+  margin: 0;
+}
+.h-card ul {
+  padding: 0 !important;
+  li {
+    list-style: none;
+    span {
+      float: right;
+      color: #ffac2d;
+      i:last-child {
+        margin-right: 5px;
+      }
+    }
+  }
+}
+.h-card img {
+  height: 85px;
+}
+.mydiv{
+  display: inline-block;
 }
 </style>
