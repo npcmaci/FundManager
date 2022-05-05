@@ -11,7 +11,8 @@
         placeholder="请输入关键字..."
         style="width: 300px; margin-top: 10px; margin-bottom: 10px"
       ></h-input>
-      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px" @click="load">搜索</h-button>
+      <h-button type = "primary" style="margin-left: 5px; margin-top: 10px; margin-bottom: 10px">搜索</h-button>
+      <p class="demo-data" v-show="this.value">{{ value }}</p>
     </div>
     <!-- <h-table stripe :columns="columns" :data="data"></h-table> -->
     <h-table stripe
@@ -21,11 +22,10 @@
     ></h-table>
     <h-page
       :total="totalNum"
-      @on-change="load"
+      @on-change="dataChange"
       show-elevator
       show-total
       :page-size="5"
-      :current.sync="currentPage"
     ></h-page>
     <h-msg-box
       v-model="msgBoxVisible"
@@ -53,14 +53,13 @@
 import core from "@hsui/core";
 import request from "@/utils/request.js"
 
+const PRODUCT_TYPE_ORM = {
+  special: "专户产品",
+  normal: "普通",
+};
 
-function deleteEntry (params) {
-  console.log('delete an entry', params.index);
-  request.delete("http://localhost:9090/Product_i/" + params.row.fundCode);
-  window.load();
-  window.load();
-  window.load();
-  window.load();
+function deleteEntry (index) {
+  console.log('delete an entry', index);
   alert("successfully delete!!!");
 };
 
@@ -72,51 +71,31 @@ function handleEdit(params) {
 
 var columns = [
       {
-        title: "基金代码",
-        key: "fundCode",
+        title: "产品代码",
+        key: "id",
+        render: (h, { row: { id } }) => h("span", {}, id.slice(-10)),
       },
       {
-        title: "基金名称",
-        key: "fundName",
+        title: "产品名称",
+        key: "productName",
       },
       {
-        title: "基金价格",
-        key: "price",
+        title: "产品类型",
+        key: "productType",
+        render: (h, { row: { productType } }) => {
+          return h("span", {}, PRODUCT_TYPE_ORM[productType]);
+        },
       },
       {
-        title: "涨跌幅",
-        key: "z0",
+        title: "证件大类",
+        key: "productCategory",
       },
       {
-        title: "近1月涨跌幅",
-        key: "z1",
+        title: "地址",
+        key: "address",
       },
       {
-        title: "近3月涨跌幅",
-        key: "z2",
-      },
-      {
-        title: "近1年涨跌幅",
-        key: "z3",
-      },
-      {
-        title: "申购状态",
-        key: "subscriptionStatus",
-      },
-      {
-        title: "赎回状态",
-        key: "redemptionStatus",
-      },
-      {
-          title: "成立时间",
-          key: "established",
-          render: (h, { row: {established } }) => h("span", {}, new Date(established).toLocaleString()),
-      },
-      {
-          title: "基金评级",
-          key: "fundRating",
-      },
-      {
+
         title: "操作",
         key: "action",
         render: (h, params) => {
@@ -129,10 +108,12 @@ var columns = [
                   size: "small",
                 },
                 on: {
+
                   click: () => {
                     //this.show(params.index);
                     console.log(params.index);
-                    console.log(params.row.id);
+                    console.log(params.row.id);//根据这个ID查数据库
+                    jump('\detail',params.row.id);
                   },
                 },
               },
@@ -167,7 +148,7 @@ var columns = [
                 on: {
                     click: () => {
                       console.log(params);
-                      deleteEntry(params);
+                      deleteEntry(params.index);
                     },
                   },
               },
@@ -178,7 +159,90 @@ var columns = [
       },
     ];
 var Data = [
-
+      {
+        id: "001",
+        productName: "AAaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C002",
+        productName: "BBaaaa",
+        productType: "normal",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C003",
+        productName: "CCaaaa",
+        productType: "normal",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C004",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C005",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C006",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C007",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C008",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C009",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C010",
+        productName: "DDaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C011",
+        productName: "AAaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      },
+      {
+        id: "C0012",
+        productName: "AAaaaa",
+        productType: "special",
+        productCategory: "基金",
+        address: "HZ",
+      }
     ];
 
 export default {
@@ -193,7 +257,6 @@ export default {
         input2: "",
         input3: "",
       },
-      currentPage: 1,
       msgBoxVisible: false,
       data: Data.slice(0, 5),
       columns: columns,
@@ -228,35 +291,29 @@ export default {
   //     this.getList();
   //   }
   // },
-  created() {
-    this.load()
-  },
-  mounted() {
-    //将Vue方法传到全局对象window中
-    window.load = this.load;
+  mounted(){
+    window.jump = this.jump;
   },
   methods: {
-    load() {
-      request.get("http://localhost:9090/Product_i",{
-        params: {
-          pageNum: this.currentPage,
-          pageSize: 5,
-          search: this.value
-        }
-      }).then(res => {
-        this.data = res.data.records
-        this.totalNum = res.data.total
-      })
-    },
     add () {
       this.msgBoxVisible = true;
       this.formLeft = {};
     },
+    show() {
+        this.$router.push({
+            name: "\detail",
+            params: { id: params.row.id },
+          });
+    },
     beforetest() {
       return true;
     },
-    jump(path) {
-      this.$hCore.navigate(path);
+    jump(path,id) {
+      console.log(id)
+      this.$router.push({
+          name: path,
+          params: { id: id },
+        });
     },
     ok() {
       request.post("http://localhost:9090/transaction", this.formLeft).then(res => {

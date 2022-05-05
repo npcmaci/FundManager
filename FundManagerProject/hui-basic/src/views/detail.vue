@@ -236,6 +236,9 @@ export default {
     console.log(this.$route);
     // console.log('@@@', data)
     return {
+      formItem: {
+        ...this.$route.params,
+      },
       show0:true,
       show30:false,
       show90:false,
@@ -281,11 +284,12 @@ export default {
     load1() {
     request.get("http://localhost:9090/Pp",{
       params: {
-        pageNum: this.currentPage,
+        pageNum: this.$route.params.id,
         pageSize: this.pageSize,
         search: this.value
       }
     }).then(res => {
+      console.log(this.$route)
       console.log(res)
       this.data = res.data
       this.totalNum = res.data.total
@@ -310,7 +314,7 @@ export default {
     load2() {
         request.get("http://localhost:9090/Product_i",{
           params: {
-            fondId: 1,
+            fondId: this.$route.params.id,
           }
         }).then(res => {
           console.log(res)
@@ -322,7 +326,7 @@ export default {
     drawLineEchart() {
         request.get("http://localhost:9090/Pp",{
               params: {
-                pageNum: this.currentPage,
+                pageNum: this.$route.params.id,
                 pageSize: this.pageSize,
                 search: this.value
               }
