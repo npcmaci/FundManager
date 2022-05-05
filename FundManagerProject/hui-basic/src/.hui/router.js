@@ -36,6 +36,11 @@ export default initRouter(
           component: Detail
         },
         {
+          name: 'editUserDetail',
+          path: 'editUserDetail',
+          component: EditUserDetail
+        },
+        {
           name: 'KaiHu',
           path: 'KaiHu',
           component: KaiHu
@@ -64,6 +69,11 @@ export default initRouter(
           name: 'sell',
           path: 'sell',
           component: Sell
+        },
+        {
+          name: 'userDetail',
+          path: 'userDetail',
+          component: UserDetail
         },
         {
           name: 'userManagement',
@@ -96,6 +106,11 @@ function Decidebuy() {
 function Detail() {
   return import(/* webpackChunkName: "detail" */ '@/views/detail.vue')
 }
+function EditUserDetail() {
+  return import(
+    /* webpackChunkName: "editUserDetail" */ '@/views/editUserDetail.vue'
+  )
+}
 function KaiHu() {
   return import(/* webpackChunkName: "KaiHu" */ '@/views/KaiHu.vue')
 }
@@ -115,6 +130,9 @@ function SearchTransaction() {
 }
 function Sell() {
   return import(/* webpackChunkName: "sell" */ '@/views/sell.vue')
+}
+function UserDetail() {
+  return import(/* webpackChunkName: "userDetail" */ '@/views/userDetail.vue')
 }
 function UserManagement() {
   return import(
