@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.example.demo.common.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.entity.Product_information;
 import com.example.demo.mapper.ProductMapper;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.common.Result;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -15,25 +16,20 @@ import javax.annotation.Resource;
 public class ProductInformationController {
 
     @Resource
-    ProductMapper productMapper;
+    ProductMapper ProductMapper;
 
     @PostMapping
     public Result<?> save(@RequestBody Product_information p) { //RequestBody注解将json数据转化成java对象
-        productMapper.insert(p);
+        ProductMapper.insert(p);
         return Result.success();
     }
-    @DeleteMapping("/{id}")
-    public Result<?> update(@PathVariable String id) {
-        productMapper.deleteById(id);
-        return Result.success();
-    }
-
     @GetMapping
-    public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
-                              @RequestParam(defaultValue = "10") Integer pageSize,
-                              @RequestParam(defaultValue = "") String search) { //RequestBody注解将json数据转化成java对象
-        Page<Product_information> userPage = productMapper.selectPage(new Page<>(pageNum, pageSize), Wrappers.<Product_information>lambdaQuery().eq(Product_information::getFundCode, search).or().like(Product_information::getFundName, search));//可以使用or和and方法连接多个wapper
-
-        return Result.success(userPage);
+    public Result<?> findPage(@RequestParam(defaultValue = "1") Integer fondId) { //RequestBody注解将json数据转化成java对象
+        QueryWrapper<Product_information> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("fund_code", "fund_name" ,"subscription_status","redemption_status","handling_fee",
+                "fund_type","fund_risk_level","fund_size","established","fund_rating","z0","z1","z2","z3","prcie").eq("fund_code",fondId);
+        List<Product_information> ProductInformation = ProductMapper.selectList(queryWrapper);//可以使用or和and方法连接多个wapper
+        System.out.println(ProductInformation);
+        return Result.success(ProductInformation);
     }
 }
