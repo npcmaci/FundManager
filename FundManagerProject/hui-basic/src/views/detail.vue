@@ -166,12 +166,12 @@ export default {
       show90:false,
       show180:false,
       show365:false,
-      fundName:"xxxx",
       value: "",
       data: Data.slice(0, 5),
       columns: columns,
       totalNum: Data.length,
       data2: Data2.slice(0, 5),
+      fundName :"xxx",
       columns2: columns2,
       selectTime: "",
       dayList: [
@@ -239,8 +239,10 @@ export default {
           }
         }).then(res => {
           console.log(res)
+          this.fundName=res.data[0].fundName
           this.data2 = res.data
           this.data2[0].established=this.data2[0].established.substring(0,10)})
+
     },
     drawLineEchart() {
         request.get("http://localhost:9090/Pp",{
