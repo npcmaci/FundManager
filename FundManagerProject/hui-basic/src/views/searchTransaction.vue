@@ -28,7 +28,7 @@
       :page-size="5"
       :current.sync="currentPage"
     ></h-page>
-    
+    <h-button type="primary" @click="model1 = true">显示对话框</h-button>
     <h-msg-box 
     v-model="msgBoxVisible"
     :escClose="true"
@@ -49,6 +49,20 @@
         >
       </div>
     </h-msg-box>
+    <div>
+      <h-msg-box
+              v-model="model1"
+              :escClose="true"
+              title="普通的MsgBox对话框标题"
+              @on-ok="ok"
+              @on-cancel="cancel"
+              :beforeEscClose="beforetest"
+      >
+        <p>对话框内容</p>
+        <p>对话框内容</p>
+        <p>对话框内容</p>
+      </h-msg-box>
+    </div>
   </div>
 </template>
 
@@ -70,7 +84,22 @@ function handleEdit(index) {
     console.log('@@@');
     console.log(index);
 }
-
+function ifban(state) {
+  if (state === "on")
+    return true;
+  return false;
+}
+function deleteTransition(params) {
+  console.log('delete an transaction:', params.index);
+  request.delete("http://localhost:9090/Transaction/" + params.row.transactionId);
+  window.load();
+  window.load();
+  window.load();
+  window.load();
+  alert("successfully delete!!!");
+}
+var kkk = true
+var model1 = true
 var columns = [
       {
         title: "业务单号",
@@ -110,13 +139,14 @@ var columns = [
         title: "清算状态",
         key: "liquidateStatus",
         render: (h, { row: { liquidateStatus } }) => {
+          kkk = liquidateStatus == "on"?false:true;
           return h("span", {}, TRANSACTION_CONDITION_ORM[liquidateStatus]);
         },
       },
       {
         title: "操作",
         key: "action",
-        render: (h, params) => {
+        render: (h, params, model1) => {
           return h("div", [
             h(
               "Button",
@@ -126,10 +156,7 @@ var columns = [
                   size: "small",
                 },
                 on: {
-                  click: () => {
-                    //this.show(params.index);
-                    console.log(params.index);
-                  },
+                  click: "model1 = true",
                 },
               },
               "查看"
@@ -140,13 +167,14 @@ var columns = [
                 props: {
                   type: "error",
                   size: "small",
+                  disabled: kkk,
                 },
                 style: {
                   marginLeft: "5px",
                 },
                 on: {
                   click: () => {
-                    handleEdit(params.index)
+                    deleteTransition(params)
                   }
                 },
               },
@@ -308,6 +336,7 @@ export default {
       columns: columns,
       totalNum: Data.length,
       currentPage: 1,
+      model1: false,
     };
   },
   created() {
@@ -330,6 +359,9 @@ export default {
         this.data = res.data.records
         this.totalNum = res.data.total
       })
+    },
+    tanchuang() {
+      v
     },
     jump(path) {
       this.$hCore.navigate(path);
