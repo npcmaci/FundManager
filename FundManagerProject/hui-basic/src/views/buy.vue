@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" style="background: url(https://i.postimg.cc/Xvbs6LMG/123.png); background-size: cover;">
     <h-form
       :model="formItem"
       label-position="left"
@@ -55,7 +55,7 @@
         ><h-button
           type="primary"
           long
-          style="font-size: 16px"
+          style="font-size: 16px; margin-bottom: 70px;"
           @click="handleSubmit"
           >下一步</h-button
         ></router-link

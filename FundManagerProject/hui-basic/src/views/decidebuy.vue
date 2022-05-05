@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" style="background: url(https://i.postimg.cc/Xvbs6LMG/123.png); background-size: cover;">
     <h-form
       :model="formItem"
       label-position="left"
@@ -45,13 +45,13 @@
       </h-form-item>
       <h-form-item>
         <router-link to="/buy"
-          ><h-button type="ghost" size="large">上一步</h-button></router-link
+          ><h-button type="ghost" size="large" style = " margin-bottom: 150px;">上一步</h-button></router-link
         >
         <h-button
           type="primary"
           size="large"
           @click="modal1 = true"
-          style="margin-left: 100px"
+          style="margin-left: 100px; margin-bottom: 150px;"
           >下一步</h-button
         >
         <h-msg-box

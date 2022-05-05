@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box" style="background: url(https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi.qqkou.com%2Fi%2F0a2482313224x869104310b26.jpg&refer=http%3A%2F%2Fi.qqkou.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1654354569&t=be9a58a2cbb9043e647ba64b91b4dad4); background-size: cover;">
     <h-form
       :model="formItem"
       :label-width="100"
