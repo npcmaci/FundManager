@@ -170,13 +170,14 @@
               <router-link to="/newProduct"
                 ><h-button
                   type="primary"
+                  size="large"
                   style="margin-left: 0px; margin-top: 100px;"
                   @click="instance('success')"
                   >确定</h-button
                 ></router-link
               >
               <router-link to="/newProduct"
-                ><h-button type="ghost" style="margin-left: 100px; margin-top: 100px"
+                ><h-button type="ghost" size = "large" style="margin-left: 100px; margin-top: 100px"
                   >取消</h-button
                 ></router-link
               >
