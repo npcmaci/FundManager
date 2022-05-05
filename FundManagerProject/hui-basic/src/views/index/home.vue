@@ -237,7 +237,7 @@ export default {
   //   }
   // },
   created() {
-    //this.load()
+    this.load()
   },
   mounted() {
     //将Vue方法传到全局对象window中
@@ -249,10 +249,11 @@ export default {
       request.get("http://localhost:9090/Product_i",{
         params: {
           pageNum: this.currentPage,
-          pageSize: 5,
+          pageSize: 10,
           search: this.value
         }
       }).then(res => {
+        console.log(res)
         this.data = res.data.records
         this.totalNum = res.data.total
       })
