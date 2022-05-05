@@ -110,6 +110,7 @@ var columns = [
                   click: () => {
                     //this.show(params.index);
                     console.log(params.index);
+                    console.log(params.row.id);
                   },
                 },
               },

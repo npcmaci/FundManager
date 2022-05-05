@@ -1,11 +1,28 @@
 <template>
+<div>
   <div class="product-detail">
-    <h2>详情页</h2>
-    <input type="button" value="显示近30天数据" @click="changeIsShow30">
-    <input type="button" value="显示近90天数据" @click="changeIsShow90">
-    <input type="button" value="显示近180天数据" @click="changeIsShow180">
+    <h1 style="margin:10px">详情页---基金{{fundName}}</h1>
+    <div style="display: flex">
+    <h-button type="primary" style="margin-bottom: 20px;" @click="changeIsShow30">近30天</h-button>
+    <h-button type="primary" style="margin-left: 10px; margin-bottom: 20px;" @click="changeIsShow90">近90天</h-button>
+    <h-select 
+    v-model="selectTime"
+    @on-change="getSelectTime"
+    label-in-value
+    placeholder="选择显示时间"
+    style="width: 200px; margin-left: 10px; margin-bottom: 20px;">
+      <h-option
+        v-for="item in dayList"
+        :value="item.value"
+        :key="item.value"
+        >{{ item.label }}</h-option
+      >
+    </h-select>
+    <h-button type = "primary" style = "margin-left: 150px; margin-bottom: 20px;" @click = "jump('/buy')">购买该基金</h-button>
+    </div>
+    <!-- <input type="button" value="显示近180天数据" @click="changeIsShow180">
     <input type="button" value="显示近1年数据" @click="changeIsShow365">
-    <input type="button" value="显示成立以来数据" @click="changeIsShow0">
+    <input type="button" value="显示成立以来数据" @click="changeIsShow0"> -->
     <div id="productLineEchart0" v-show="show0" class="line-echart"></div>
     <div id="productLineEchart30" v-show="show30" class="line-echart"></div>
     <div id="productLineEchart90" v-show="show90" class="line-echart"></div>
@@ -17,6 +34,7 @@
       style="margin-bottom: 8px;"
       ></h-table>
   </div>
+</div>
 </template>
 
 <script>
@@ -111,6 +129,7 @@ var Data = [
         date:"3",
     },
 ];
+
 var Data2 = [
     {
         fundCode:1,
@@ -152,7 +171,31 @@ export default {
       columns: columns,
       totalNum: Data.length,
       data2: Data2.slice(0, 5),
+      fundName :"xxx",
       columns2: columns2,
+      selectTime: "",
+      dayList: [
+        {
+          value: "30",
+          label: "显示近30天数据",
+        },
+        {
+          value: "90",
+          label: "显示近90天数据",
+        },
+        {
+          value: "180",
+          label: "显示近180天数据",
+        },
+        {
+          value: "365",
+          label: "显示近1年数据",
+        },
+        {
+          value: "ever",
+          label: "显示成立以来数据",
+        },
+      ],
     };
   },
   created() {
@@ -196,8 +239,10 @@ export default {
           }
         }).then(res => {
           console.log(res)
+          this.fundName=res.data[0].fundName
           this.data2 = res.data
           this.data2[0].established=this.data2[0].established.substring(0,10)})
+
     },
     drawLineEchart() {
         request.get("http://localhost:9090/Pp",{
@@ -429,6 +474,7 @@ export default {
         this.show365=false;
     },
     changeIsShow30:function(){
+      console.log('!@#$##%@$#^$%');
         this.show0=false;
         this.show30=true;
         this.show90=false;
@@ -455,6 +501,24 @@ export default {
         this.show90=false;
         this.show180=false;
         this.show365=true;
+    },
+    getSelectTime(currentValue) {
+      console.log('select value: ',currentValue);
+      if(currentValue.value === '30') {
+        this.changeIsShow30()
+      }else if(currentValue.value === '90') {
+        // console.log("点击了90！！");
+        this.changeIsShow90()
+      }else if(currentValue.value === '180') {
+        this.changeIsShow180()
+      }else if(currentValue.value === '365') {
+        this.changeIsShow365()
+      }else {
+        this.changeIsShow0()
+      }
+    },
+    jump(path) {
+      this.$hCore.navigate(path);
     },
   },
 };

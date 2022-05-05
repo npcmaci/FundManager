@@ -36,11 +36,6 @@ export default initRouter(
           component: Detail
         },
         {
-          name: 'editProduct',
-          path: 'editProduct',
-          component: EditProduct
-        },
-        {
           name: 'KaiHu',
           path: 'KaiHu',
           component: KaiHu
@@ -100,9 +95,6 @@ function Decidebuy() {
 }
 function Detail() {
   return import(/* webpackChunkName: "detail" */ '@/views/detail.vue')
-}
-function EditProduct() {
-  return import(/* webpackChunkName: "editProduct" */ '@/views/editProduct.vue')
 }
 function KaiHu() {
   return import(/* webpackChunkName: "KaiHu" */ '@/views/KaiHu.vue')

@@ -5,7 +5,7 @@
       <h-row name="flex">
         <h-col span="5" class="layout-menu-left">
           <h-menu
-            active-name="1-0"
+            :active-name="activeName"
             theme="dark"
             width="auto"
             :open-names="['1','2', '3', '4']"
@@ -18,7 +18,6 @@
               </template>
               <router-link to="/home"><h-menu-item name="1-0">产品列表</h-menu-item></router-link>
               <router-link to="/newProduct"><h-menu-item name="1-2">新建基金</h-menu-item></router-link>
-              <router-link to="/editProduct"><h-menu-item name="1-3">编辑产品</h-menu-item></router-link>
               <router-link to="/detail"><h-menu-item name="1-4">详情页</h-menu-item></router-link>
             </h-submenu>
 
@@ -37,6 +36,7 @@
                 业务查询
               </template>
               <router-link to="/searchTransaction"><h-menu-item name="3-1">业务列表</h-menu-item></router-link>
+
             </h-submenu>
 
             <h-submenu name="4">
@@ -102,5 +102,10 @@ export default{
       this.$hCore.navigate(path);
     },
   },
+  data() {
+    return {
+      activeName: "1-0",
+    }
+  }
 }
 </script>

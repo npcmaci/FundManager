@@ -28,25 +28,26 @@
       :page-size="5"
       :current.sync="currentPage"
     ></h-page>
-    <h-msg-box
-      v-model="msgBoxVisible"
-      :escClose="true"
-      title="新增交易"
-      @on-ok="ok"
-      @on-cancel="cancel"
-      :beforeEscClose="beforetest"
-    >
-    <h-form :model="formLeft" label-position="left" :label-width="120">
-      <h-form-item label="标题">
-        <h-input v-model="formLeft.input1"></h-input>
-      </h-form-item>
-      <h-form-item label="标题名称">
-        <h-input v-model="formLeft.input2"></h-input>
-      </h-form-item>
-      <h-form-item label="标题名称对齐">
-        <h-input v-model="formLeft.input3"></h-input>
-      </h-form-item>
-    </h-form>
+    
+    <h-msg-box 
+    v-model="msgBoxVisible"
+    :escClose="true"
+    width="500">
+      <p slot="header" style="color: #495060; text-align: center;">
+        <h-icon name="addition_fill"></h-icon>
+        <span>新增交易</span>
+      </p>
+      <h-button type="primary" size="large" style="height: 150px; width:150px; margin-left: 30px;" @click="jump('/buy')">申购</h-button>
+      <h-button type="ghost" size="large" style="height: 150px; width: 150px; margin-left: 50px;" @click="jump('/sell')">赎回</h-button>
+      <div slot="footer">
+        <h-button
+          long
+          size="large"
+          @click="del"
+          style="margin-top: 30px; margin-bottom: 10px"
+          >取消</h-button
+        >
+      </div>
     </h-msg-box>
   </div>
 </template>
@@ -330,9 +331,16 @@ export default {
         this.totalNum = res.data.total
       })
     },
+    jump(path) {
+      this.$hCore.navigate(path);
+    },
     add () {
       this.msgBoxVisible = true;
       this.formLeft = {};
+    },
+    del() {
+      this.msgBoxVisible = false;
+      this.$hMessage.success("取消新增业务！");
     },
     beforetest() {
       return true;
