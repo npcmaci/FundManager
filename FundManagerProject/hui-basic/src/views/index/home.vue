@@ -238,7 +238,7 @@ export default {
   //   }
   // },
   created() {
-    this.load()
+    //this.load()
   },
   mounted() {
     //将Vue方法传到全局对象window中

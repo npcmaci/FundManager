@@ -27,7 +27,7 @@ public class ProductInformationController {
     public Result<?> findPage(@RequestParam(defaultValue = "1") Integer fondId) { //RequestBody注解将json数据转化成java对象
         QueryWrapper<Product_information> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("fund_code", "fund_name" ,"subscription_status","redemption_status","handling_fee",
-                "fund_type","fund_risk_level","fund_size","established","fund_rating","z0","z1","z2","z3","prcie").eq("fund_code",fondId);
+                "fund_type","fund_risk_level","fund_size","established","fund_rating","z0","z1","z2","z3","price").eq("fund_code",fondId);
         List<Product_information> ProductInformation = ProductMapper.selectList(queryWrapper);//可以使用or和and方法连接多个wapper
         System.out.println(ProductInformation);
         return Result.success(ProductInformation);

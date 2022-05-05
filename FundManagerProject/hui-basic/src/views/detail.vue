@@ -313,11 +313,9 @@ export default {
     },
     load2() {
         request.get("http://localhost:9090/Product_i",{
-            params: {
-                        pageNum: this.$route.params.id,
-                        pageSize: this.pageSize,
-                        search: this.$route.params.id
-                      }
+          params: {
+            fondId: this.$route.params.id,
+          }
         }).then(res => {
           console.log(res)
           this.fundName=res.data[0].fundName
